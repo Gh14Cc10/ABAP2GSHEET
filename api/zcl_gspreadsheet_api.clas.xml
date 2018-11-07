@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_GSPREADSHEET_API</CLSNAME>
+    <VERSION>1</VERSION>
+    <LANGU>E</LANGU>
+    <DESCRIPT>Mirror class of Google SpreadSheets Api</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <CLSFINAL>X</CLSFINAL>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_GSPREADSHEET_API</CLSNAME>
+     <CMPNAME>BATCH_UPDATE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Applies one or more updates to the spreadsheet</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_GSPREADSHEET_API</CLSNAME>
+     <CMPNAME>CREATE_NEW_SPREADSHEET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Creates a spreadsheet, returning the newly created spreadshe</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_GSPREADSHEET_API</CLSNAME>
+     <CMPNAME>GC_ENDPOINT_URL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>GOOGLE SPREASHEET API URL</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_GSPREADSHEET_API</CLSNAME>
+     <CMPNAME>GET_SPREADSHEET</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Returns the spreadsheet at the given ID.</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_GSPREADSHEET_API</CLSNAME>
+     <CMPNAME>GET_SPREADSHEET_FILTER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Returns the spreadsheet at the given ID with data filtered</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

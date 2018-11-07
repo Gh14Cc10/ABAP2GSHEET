@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DOMA" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD01V>
+    <DOMNAME>ZGSHEET_VALUE_INPUT_ENUM</DOMNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DATATYPE>CHAR</DATATYPE>
+    <LENG>000030</LENG>
+    <OUTPUTLEN>000030</OUTPUTLEN>
+    <VALEXI>X</VALEXI>
+    <DDTEXT>ValueInput options domain</DDTEXT>
+   </DD01V>
+   <DD07V_TAB>
+    <DD07V>
+     <DOMNAME>ZGSHEET_VALUE_INPUT_ENUM</DOMNAME>
+     <VALPOS>0001</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>USER_ENTER</DOMVALUE_L>
+     <DDTEXT>The values will be parsed as if the user typed them</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_VALUE_INPUT_ENUM</DOMNAME>
+     <VALPOS>0002</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>RAW</DOMVALUE_L>
+     <DDTEXT>The values the user has entered will not be parsed and will</DDTEXT>
+    </DD07V>
+   </DD07V_TAB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

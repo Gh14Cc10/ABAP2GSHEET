@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZGSHEET_EDITORS_S</TABNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <TABCLASS>INTTAB</TABCLASS>
+    <DDTEXT>The editors of a protected range</DDTEXT>
+    <EXCLASS>4</EXCLASS>
+   </DD02V>
+   <DD03P_TABLE>
+    <DD03P>
+     <TABNAME>ZGSHEET_EDITORS_S</TABNAME>
+     <FIELDNAME>USERS</FIELDNAME>
+     <POSITION>0001</POSITION>
+     <ROLLNAME>ZGSHEET_STRING_TT</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <DATATYPE>TTYP</DATATYPE>
+     <MASK>  TTYPL</MASK>
+     <COMPTYPE>L</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <TABNAME>ZGSHEET_EDITORS_S</TABNAME>
+     <FIELDNAME>GROUPS</FIELDNAME>
+     <POSITION>0002</POSITION>
+     <ROLLNAME>ZGSHEET_STRING_TT</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <DATATYPE>TTYP</DATATYPE>
+     <MASK>  TTYPL</MASK>
+     <COMPTYPE>L</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <TABNAME>ZGSHEET_EDITORS_S</TABNAME>
+     <FIELDNAME>DOMAIN_USERS_CAN_EDIT</FIELDNAME>
+     <POSITION>0003</POSITION>
+     <ROLLNAME>ZGSHEET_BOOL</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

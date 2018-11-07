@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DOMA" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD01V>
+    <DOMNAME>ZGSHEET_NUM_FORMAT_TYPE</DOMNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DATATYPE>CHAR</DATATYPE>
+    <LENG>000010</LENG>
+    <OUTPUTLEN>000010</OUTPUTLEN>
+    <VALEXI>X</VALEXI>
+    <DDTEXT>Google sheet number format  enum</DDTEXT>
+   </DD01V>
+   <DD07V_TAB>
+    <DD07V>
+     <DOMNAME>ZGSHEET_NUM_FORMAT_TYPE</DOMNAME>
+     <VALPOS>0001</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>NUMBER_FOR</DOMVALUE_L>
+     <DDTEXT>The number format is not specified and is based on the conte</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_NUM_FORMAT_TYPE</DOMNAME>
+     <VALPOS>0002</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>TEXT</DOMVALUE_L>
+     <DDTEXT>Text formatting, e.g 1000.12</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_NUM_FORMAT_TYPE</DOMNAME>
+     <VALPOS>0003</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>NUMBER</DOMVALUE_L>
+     <DDTEXT>Number formatting, e.g, 1,000.12</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_NUM_FORMAT_TYPE</DOMNAME>
+     <VALPOS>0004</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>PERCENT</DOMVALUE_L>
+     <DDTEXT>Percent formatting, e.g 10.12%</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_NUM_FORMAT_TYPE</DOMNAME>
+     <VALPOS>0005</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>DATE</DOMVALUE_L>
+     <DDTEXT>Currency formatting, e.g $1,000.12</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_NUM_FORMAT_TYPE</DOMNAME>
+     <VALPOS>0006</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>CURRENCY</DOMVALUE_L>
+     <DDTEXT>Date formatting, e.g 9/26/2008</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_NUM_FORMAT_TYPE</DOMNAME>
+     <VALPOS>0007</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>TIME</DOMVALUE_L>
+     <DDTEXT>Time formatting, e.g 3:59:00 PM</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_NUM_FORMAT_TYPE</DOMNAME>
+     <VALPOS>0008</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>DATE_TIME</DOMVALUE_L>
+     <DDTEXT>Date+Time formatting, e.g 9/26/08 15:59:00</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_NUM_FORMAT_TYPE</DOMNAME>
+     <VALPOS>0009</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>SCIENTIFIC</DOMVALUE_L>
+     <DDTEXT>Scientific number formatting, e.g 1.01E+03</DDTEXT>
+    </DD07V>
+   </DD07V_TAB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

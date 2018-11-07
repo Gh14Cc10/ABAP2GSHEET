@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DOMA" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD01V>
+    <DOMNAME>ZGSHEET_HORIZONTALALIGN_ENUM</DOMNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DATATYPE>CHAR</DATATYPE>
+    <LENG>000010</LENG>
+    <OUTPUTLEN>000010</OUTPUTLEN>
+    <VALEXI>X</VALEXI>
+    <DDTEXT>Range of horizzontal align values</DDTEXT>
+   </DD01V>
+   <DD07V_TAB>
+    <DD07V>
+     <DOMNAME>ZGSHEET_HORIZONTALALIGN_ENUM</DOMNAME>
+     <VALPOS>0001</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>HORIZONTAL</DOMVALUE_L>
+     <DDTEXT>The horizontal alignment is not specified. Do not use this</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_HORIZONTALALIGN_ENUM</DOMNAME>
+     <VALPOS>0002</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>LEFT</DOMVALUE_L>
+     <DDTEXT>The text is explicitly aligned to the left of the cel</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_HORIZONTALALIGN_ENUM</DOMNAME>
+     <VALPOS>0003</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>CENTER</DOMVALUE_L>
+     <DDTEXT>The text is explicitly aligned to the center of the cell</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_HORIZONTALALIGN_ENUM</DOMNAME>
+     <VALPOS>0004</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>RIGHT</DOMVALUE_L>
+     <DDTEXT>The text is explicitly aligned to the right of the cell</DDTEXT>
+    </DD07V>
+   </DD07V_TAB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

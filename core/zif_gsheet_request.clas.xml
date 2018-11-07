@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZIF_GSHEET_REQUEST</CLSNAME>
+    <VERSION>1</VERSION>
+    <LANGU>E</LANGU>
+    <DESCRIPT>Batch update request class</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <CLSFINAL>X</CLSFINAL>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_GSHEET_REQUEST</CLSNAME>
+     <CMPNAME>ADD_REQUEST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Append new request</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_GSHEET_REQUEST</CLSNAME>
+     <CMPNAME>CONSTRUCTOR</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>CONSTRUCTOR</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_GSHEET_REQUEST</CLSNAME>
+     <CMPNAME>REQUESTS_LIST_TY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Genering interface request</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_GSHEET_REQUEST</CLSNAME>
+     <CMPNAME>REQUEST_TY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Genering google sheet single request</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_GSHEET_REQUEST</CLSNAME>
+     <CMPNAME>SEND_REQUEST</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Send the current reqest to google</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZIF_GSHEET_REQUEST</CLSNAME>
+     <CMPNAME>ZTEST_TYPE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Structure for Spreadsheet batch update method response</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

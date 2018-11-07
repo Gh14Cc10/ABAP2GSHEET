@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DOMA" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD01V>
+    <DOMNAME>ZGSHEET_WRAP_STRATEGY_ENUM</DOMNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DATATYPE>CHAR</DATATYPE>
+    <LENG>000010</LENG>
+    <OUTPUTLEN>000010</OUTPUTLEN>
+    <VALEXI>X</VALEXI>
+    <DDTEXT>Wrap strategy values for google sheet</DDTEXT>
+   </DD01V>
+   <DD07V_TAB>
+    <DD07V>
+     <DOMNAME>ZGSHEET_WRAP_STRATEGY_ENUM</DOMNAME>
+     <VALPOS>0001</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>WRAP_STRAT</DOMVALUE_L>
+     <DDTEXT>The default value, do not use</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_WRAP_STRATEGY_ENUM</DOMNAME>
+     <VALPOS>0002</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>OVERFLOW_C</DOMVALUE_L>
+     <DDTEXT>Lines that are longer than the cell will be written in next</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_WRAP_STRATEGY_ENUM</DOMNAME>
+     <VALPOS>0003</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>LEGACY_WRA</DOMVALUE_L>
+     <DDTEXT>This wrap strategy represents the old Google Sheets</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_WRAP_STRATEGY_ENUM</DOMNAME>
+     <VALPOS>0004</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>CLIP</DOMVALUE_L>
+     <DDTEXT>Lines that are longer than the cell width will be clipped.</DDTEXT>
+    </DD07V>
+    <DD07V>
+     <DOMNAME>ZGSHEET_WRAP_STRATEGY_ENUM</DOMNAME>
+     <VALPOS>0005</VALPOS>
+     <DDLANGUAGE>E</DDLANGUAGE>
+     <DOMVALUE_L>WRAP</DOMVALUE_L>
+     <DDTEXT>Words that are longer than a line are wrapped at the charact</DDTEXT>
+    </DD07V>
+   </DD07V_TAB>
+  </asx:values>
+ </asx:abap>
+</abapGit>

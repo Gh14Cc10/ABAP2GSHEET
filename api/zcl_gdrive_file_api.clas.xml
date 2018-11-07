@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_CLAS" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <VSEOCLASS>
+    <CLSNAME>ZCL_GDRIVE_FILE_API</CLSNAME>
+    <VERSION>1</VERSION>
+    <LANGU>E</LANGU>
+    <DESCRIPT>Mirror class of Gdrive file API</DESCRIPT>
+    <EXPOSURE>2</EXPOSURE>
+    <STATE>1</STATE>
+    <CLSFINAL>X</CLSFINAL>
+    <CLSCCINCL>X</CLSCCINCL>
+    <FIXPT>X</FIXPT>
+    <UNICODE>X</UNICODE>
+   </VSEOCLASS>
+   <DESCRIPTIONS>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_GDRIVE_FILE_API</CLSNAME>
+     <CMPNAME>COPY</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Method to clone a file to another</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_GDRIVE_FILE_API</CLSNAME>
+     <CMPNAME>DELETE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Permanently deletes a file owned by the user without moving</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_GDRIVE_FILE_API</CLSNAME>
+     <CMPNAME>GC_ENDPOINT_URL</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Google  gdrive file url</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_GDRIVE_FILE_API</CLSNAME>
+     <CMPNAME>GC_UPLOAD_ENDPOINT</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Google  gdrive upload file url</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_GDRIVE_FILE_API</CLSNAME>
+     <CMPNAME>LIST_FILTER</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Lists files based on parameters</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_GDRIVE_FILE_API</CLSNAME>
+     <CMPNAME>UPDATE</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Move a any file to a drive&apos;s folder</DESCRIPT>
+    </SEOCOMPOTX>
+    <SEOCOMPOTX>
+     <CLSNAME>ZCL_GDRIVE_FILE_API</CLSNAME>
+     <CMPNAME>UPLOAD</CMPNAME>
+     <LANGU>E</LANGU>
+     <DESCRIPT>Upload a file to user root directory</DESCRIPT>
+    </SEOCOMPOTX>
+   </DESCRIPTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

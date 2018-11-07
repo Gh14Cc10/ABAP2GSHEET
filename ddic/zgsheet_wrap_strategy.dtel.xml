@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZGSHEET_WRAP_STRATEGY</ROLLNAME>
+    <DDLANGUAGE>E</DDLANGUAGE>
+    <DOMNAME>ZGSHEET_WRAP_STRATEGY_ENUM</DOMNAME>
+    <SCRLEN1>08</SCRLEN1>
+    <DDTEXT>Wrap strategy  values for google sheet</DDTEXT>
+    <SCRTEXT_S>strategy</SCRTEXT_S>
+    <DTELMASTER>E</DTELMASTER>
+    <REFKIND>D</REFKIND>
+   </DD04V>
+  </asx:values>
+ </asx:abap>
+</abapGit>
