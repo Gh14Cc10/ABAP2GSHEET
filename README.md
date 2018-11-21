@@ -5,6 +5,13 @@ This project comprises an archive containing a framework and sample source codes
 # Minimum Requirements
 
 - This functionality is only available for SAP NetWeaver starting from AS ABAP 7.40 SP08 (Note 2043775 must be applied)
+- As a prerequisite the system administrator needs authorizations to create OAuth 2.0 Client Configurations. Make sure that the system administrator has the authorization S_OA2C_ADM with at least the activities 01, 02 and 03 in the AS ABAP system.
+- Make sure that the end users who should be allowed to use the new OAuth 2.0 Client have the required authorizations assigned. During execution of OAuth 2.0 flows there is a check of the authorization object “S_OA2C_USE”. This authorization object has two fields “PROFILE” and “ACTVT”. Set the authorization field values as follows:
+
+S_OA2C_USE
+PROFILE       = Z_GOOGLE_CL_PROFILE
+ACTVT           = 16
+
 
 # Download and Installation
 
@@ -13,7 +20,8 @@ This project comprises an archive containing a framework and sample source codes
 1. Clone the repository via ABAPGIT.
 2. Setup the Google API Endpoint (see chapter 2.2 in [Export of ALV Grid Data to Google Sheets](https://www.sap.com/documents/2018/07/56e0dd6d-0f7d-0010-87a3-c30de2ffd8ff.html) )
 3. Create a Service Provider Type for Google (see chapter 2.3.1 [Export of ALV Grid Data to Google Sheets](https://www.sap.com/documents/2018/07/56e0dd6d-0f7d-0010-87a3-c30de2ffd8ff.html))
-4. Create an OAuth 2.0 Client Profile (see chapter 2.3.6 [Export of ALV Grid Data to Google Sheets](https://www.sap.com/documents/2018/07/56e0dd6d-0f7d-0010-87a3-c30de2ffd8ff.html))
+4. Create an OAuth 2.0 Client Profile (see chapter 2.3.6 [Export of ALV Grid Data to Google Sheets](https://www.sap.com/documents/2018/07/56e0dd6d-0f7d-0010-87a3-c30de2ffd8ff.html)) 
+  Abap2Gsheet expect a profile named "Z_GOOGLE_CL_PROFILE"
 5. Configure the Access to Google APIs (see chapter 2.4 [Export of ALV Grid Data to Google Sheets](https://www.sap.com/documents/2018/07/56e0dd6d-0f7d-0010-87a3-c30de2ffd8ff.html))
 6. Check the Connection (see chapter 2.5. [Export of ALV Grid Data to Google Sheets](https://www.sap.com/documents/2018/07/56e0dd6d-0f7d-0010-87a3-c30de2ffd8ff.html))
 
@@ -164,14 +172,15 @@ In Abap2Gsheet batchUpdate  is available as a method of class ZCL_GSPREADSHEET_A
 The list of method available with abap2Gsheet
 
 BatchUpdate Method implemented:
-REPEAT_CELL: Repeats a single cell across a range
-UPDATE_BORDERS: Updates the borders in a range of cells.
-ADD_PROTECTED_RANGE: Adds a protected range.
-ADD_SHEET: Add new sheet
-DELETE_SHEET: Delete a sheet by its ID and spreadsheet ID
-UPDATE_SPREADSHEET: Updates the spreadsheet's properties.
-UPDATE_SHEET: Updates a sheet's properties. (Eg. background Color)
-ADD_CONDITIONAL_FORMATTING:  Add rule for conditional formatting
+- REPEAT_CELL: Repeats a single cell across a range
+- UPDATE_BORDERS: Updates the borders in a range of cells.
+- ADD_PROTECTED_RANGE: Adds a protected range.
+- ADD_SHEET: Add new sheet
+- DELETE_SHEET: Delete a sheet by its ID and spreadsheet ID
+- UPDATE_SPREADSHEET: Updates the spreadsheet's properties.
+- UPDATE_SHEET: Updates a sheet's properties. (Eg. background Color)
+- ADD_CONDITIONAL_FORMATTING:  Add rule for conditional formatting
+ 
 Sample Edit Cell Borders json
 ```JSON
 Json update sample
