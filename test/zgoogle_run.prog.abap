@@ -46,21 +46,21 @@ DATA: lv_json_STRING    type STRING,
 * IMPORTING
 * out_string = lv_json_string.
 
-
-DATA: JSON_DOCUMENT TYPE REF TO  ZCL_JSON_DOCUMENT,
-      intend        type i,
-      lv_results    type string_table,
-      lt_results    type zjson_key_value,
-      data_found    type ABAP_BOOL VALUE abap_true.
-
-
-ZCL_JSON_DOCUMENT=>CREATE_WITH_JSON(
-  exporting
-    JSON          = lv_response_string
-*       DATE_FORMAT   =
-  receiving
-    JSON_DOCUMENT = json_document
-).
+**
+**DATA: JSON_DOCUMENT TYPE REF TO  ZCL_JSON_DOCUMENT,
+**      intend        type i,
+**      lv_results    type string_table,
+**      lt_results    type zjson_key_value,
+**      data_found    type ABAP_BOOL VALUE abap_true.
+**
+**
+**ZCL_JSON_DOCUMENT=>CREATE_WITH_JSON(
+**  exporting
+**    JSON          = lv_response_string
+***       DATE_FORMAT   =
+**  receiving
+**    JSON_DOCUMENT = json_document
+**).
 
 *json_document->set_json( lv_response_string ).
 *lv_results = json_document->GET_TABLE_DATA( ).
@@ -72,10 +72,10 @@ ZCL_JSON_DOCUMENT=>CREATE_WITH_JSON(
 *    RESULT         = lv_results
 *).
 *lt_results = JSON_DOCUMENT->GET_VALUE
-JSON_DOCUMENT->get_data(
-*            EXPORTING json =  lv_response_string
-  IMPORTING data = lv_results
-  ).
+**JSON_DOCUMENT->get_data(
+***            EXPORTING json =  lv_response_string
+**  IMPORTING data = lv_results
+**  ).
 
 
 

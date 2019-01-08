@@ -217,17 +217,17 @@ CLEAR lt_fields.
  out_string = lv_json_string.
 
 
-DATA JSON_DOCUMENT TYPE REF TO  ZCL_JSON_DOCUMENT.
-
-
-   ZCL_JSON_DOCUMENT=>CREATE_WITH_JSON(
-     exporting
-       JSON          = lv_json_STRING
-*       DATE_FORMAT   =
-     receiving
-       JSON_DOCUMENT = json_document
-   ).
- json_document->set_json( lv_json_STRING ).
+*DATA JSON_DOCUMENT TYPE REF TO  ZCL_JSON_DOCUMENT.
+*
+*
+*   ZCL_JSON_DOCUMENT=>CREATE_WITH_JSON(
+*     exporting
+*       JSON          = lv_json_STRING
+**       DATE_FORMAT   =
+*     receiving
+*       JSON_DOCUMENT = json_document
+*   ).
+* json_document->set_json( lv_json_STRING ).
 
 
 
