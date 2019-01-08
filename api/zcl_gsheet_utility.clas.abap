@@ -1,19 +1,19 @@
-class ZCL_GSHEET_UTILITY definition
-  public
-  final
-  create public .
+CLASS zcl_gsheet_utility DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  class-data GC_SPREADSHEET_URL_PREFIX type STRING value 'https://docs.google.com/spreadsheets/d/' ##NO_TEXT.
+    CLASS-DATA gc_spreadsheet_url_prefix TYPE string VALUE 'https://docs.google.com/spreadsheets/d/' ##NO_TEXT.
 
-  class-methods EXTRACT_SPREADSHEET_ID
-    importing
-      !IP_URL type STRING
-    returning
-      value(EP_IDENTIFIER) type STRING .
-protected section.
-private section.
+    CLASS-METHODS extract_spreadsheet_id
+      IMPORTING
+        !ip_url              TYPE string
+      RETURNING
+        VALUE(ep_identifier) TYPE string .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -21,14 +21,14 @@ ENDCLASS.
 CLASS ZCL_GSHEET_UTILITY IMPLEMENTATION.
 
 
-  method EXTRACT_SPREADSHEET_ID.
+  METHOD extract_spreadsheet_id.
 
-     ep_identifier = ip_url.
-    REPLACE  GC_SPREADSHEET_URL_PREFIX IN ep_identifier WITH ''.
-    REPLACE all OCCURRENCES OF REGEX '/.*' IN  ep_identifier WITH ''.
-
-
+    ep_identifier = ip_url.
+    REPLACE  gc_spreadsheet_url_prefix IN ep_identifier WITH ''.
+    REPLACE ALL OCCURRENCES OF REGEX '/.*' IN  ep_identifier WITH ''.
 
 
-  endmethod.
+
+
+  ENDMETHOD.
 ENDCLASS.

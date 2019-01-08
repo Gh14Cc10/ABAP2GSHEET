@@ -1,20 +1,20 @@
-class ZCL_GSPREADSHEET_SHEETS_API definition
-  public
-  inheriting from ZCL_GOOGLE_HTTP_API
-  final
-  create public .
+CLASS zcl_gspreadsheet_sheets_api DEFINITION
+  PUBLIC
+  INHERITING FROM zcl_google_http_api
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  constants GC_ENDPOINT_URL type STRING value 'https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/sheets/{sheetId}' ##NO_TEXT.
+    CONSTANTS gc_endpoint_url TYPE string VALUE 'https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/sheets/{sheetId}' ##NO_TEXT.
 
-  class-methods COPY_SHEET
-    importing
-      !PA_SPREADSHEET_ID type STRING
-      !PA_SHEET_ID type ZGSHEET_SHEET_ID
-      value(PA_REQUEST) type ZGSHEET_COPY_REQ_S .
-protected section.
-private section.
+    CLASS-METHODS copy_sheet
+      IMPORTING
+        !pa_spreadsheet_id TYPE string
+        !pa_sheet_id       TYPE zgsheet_sheet_id
+        VALUE(pa_request)  TYPE zgsheet_copy_req_s .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -22,19 +22,19 @@ ENDCLASS.
 CLASS ZCL_GSPREADSHEET_SHEETS_API IMPLEMENTATION.
 
 
-  method COPY_SHEET.
+  METHOD copy_sheet.
 
-    DATA: lv_target    TYPE string,
+    DATA: lv_target      TYPE string,
 *          LV_GHTTP        TYPE REF TO  ZCL_GOOGLE_HTTP_API,
-          lt_param     TYPE tihttpnvp,
-          lv_req_string type string,
-          lv_resp_string      TYPE string.
+          lt_param       TYPE tihttpnvp,
+          lv_req_string  TYPE string,
+          lv_resp_string TYPE string.
 *    CREATE OBJECT LV_GHTTP TYPE ZCL_GOOGLE_HTTP_API.
 
-    lv_target = GC_ENDPOINT_URL.
+    lv_target = gc_endpoint_url.
 
-    REPLACE '{spreadsheetId}' WITH PA_SPREADSHEET_ID INTO lv_target.
-    REPLACE '{sheetId}' WITH PA_SHEET_ID INTO lv_target.
+    REPLACE '{spreadsheetId}' WITH pa_spreadsheet_id INTO lv_target.
+    REPLACE '{sheetId}' WITH pa_sheet_id INTO lv_target.
     CONCATENATE lv_target ':copyTo'  INTO lv_target.
 
 
@@ -50,16 +50,16 @@ CLASS ZCL_GSPREADSHEET_SHEETS_API IMPLEMENTATION.
     .
 
 *lv_req_string = '{"destinationSpreadsheetId":''1XotQtwxiA9CdObItIJl37vHBC5YkGlv8UKkp6NDzcEU''}'.
-lv_req_string = /ui2/cl_json=>serialize( data = pa_request compress = abap_true pretty_name = /ui2/cl_json=>pretty_mode-camel_case ).
+    lv_req_string = /ui2/cl_json=>serialize( data = pa_request compress = abap_true pretty_name = /ui2/cl_json=>pretty_mode-camel_case ).
 
-    ZCL_GOOGLE_HTTP_API=>SEND_POST_REQUEST(
-      exporting
-        IP_TARGET          = lv_target
-        IP_PARAM_KIND      =  'H'
+    zcl_google_http_api=>send_post_request(
+      EXPORTING
+        ip_target          = lv_target
+        ip_param_kind      =  'H'
 *        PT_PARAM           =     " HTTP Framework (iHTTP) Table Name/Value Pairs
-        IP_JSON_REQUEST    = lv_req_string
-      importing
-        EP_RESPONSE_STRING =  lv_resp_string
+        ip_json_request    = lv_req_string
+      IMPORTING
+        ep_response_string =  lv_resp_string
     ).
 
 
@@ -75,5 +75,5 @@ lv_req_string = /ui2/cl_json=>serialize( data = pa_request compress = abap_true 
 
 
 
-  endmethod.
+  ENDMETHOD.
 ENDCLASS.

@@ -13,10 +13,10 @@
 *commenter
 *reader
 *&---------------------------------------------------------------------*
-REPORT ZGOOGLE_SHARE_FRAMEWORK.
+REPORT zgoogle_share_framework.
 
 SELECTION-SCREEN: BEGIN OF BLOCK bl1 WITH FRAME TITLE TEXT-i01.
-PARAMETERS: p_url type string OBLIGATORY.
+PARAMETERS: p_url TYPE string OBLIGATORY.
 PARAMETERS: p_mail LIKE rlgrap-filename OBLIGATORY.
 PARAMETERS: p_role LIKE rlgrap-filename OBLIGATORY.
 SELECTION-SCREEN:END OF BLOCK bl1 .
@@ -24,19 +24,19 @@ SELECTION-SCREEN:END OF BLOCK bl1 .
 *REPLACE 'https://docs.google.com/spreadsheets/d/' IN p_url WITH ''.
 *REPLACE all OCCURRENCES OF REGEX '/.*' IN p_url WITH ''.
 
-DATA: ls_permission type zgdrive_permission_s,
-      lv_spreadsheet_id type string.
-LV_SPREADSHEET_ID  =  ZCL_GSHEET_UTILITY=>EXTRACT_SPREADSHEET_ID( IP_URL =  p_url ).
+DATA: ls_permission     TYPE zgdrive_permission_s,
+      lv_spreadsheet_id TYPE string.
+lv_spreadsheet_id  =  zcl_gsheet_utility=>extract_spreadsheet_id( ip_url =  p_url ).
 
 
 
-LS_PERMISSION-ROLE = p_role.
-LS_PERMISSION-type = 'user'.
-LS_PERMISSION-email_address = p_mail.
+ls_permission-role = p_role.
+ls_permission-type = 'user'.
+ls_permission-email_address = p_mail.
 
 *Creating new permission and share
-ZCL_GDRIVE_PERMISSION_API=>CREATE(
-  exporting
-    IP_SPREADSHEET_ID =  lv_spreadsheet_id" Spreadsheet where to apply the permission
-    IP_PERMISSION     =  ls_permission   " A permisssione for a google drive file
+zcl_gdrive_permission_api=>create(
+  EXPORTING
+    ip_spreadsheet_id =  lv_spreadsheet_id" Spreadsheet where to apply the permission
+    ip_permission     =  ls_permission   " A permisssione for a google drive file
 ).

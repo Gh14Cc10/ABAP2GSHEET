@@ -1,13 +1,13 @@
-class ZCL_USER definition
-  public
-  final
-  create public .
+CLASS zcl_user DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  methods GET_USER_FILE .
-protected section.
-private section.
+    METHODS get_user_file .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -15,6 +15,6 @@ ENDCLASS.
 CLASS ZCL_USER IMPLEMENTATION.
 
 
-  method GET_USER_FILE.
-  endmethod.
+  METHOD get_user_file.
+  ENDMETHOD.
 ENDCLASS.

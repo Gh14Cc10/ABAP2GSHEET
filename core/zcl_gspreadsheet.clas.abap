@@ -1,82 +1,82 @@
-class ZCL_GSPREADSHEET definition
-  public
-  final
-  create public .
+CLASS zcl_gspreadsheet DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  methods SET_TITLE
-    importing
-      value(IP_TITLE) type STRING .
-  methods CREATE_FROM_TEMPLATE
-    importing
-      value(PA_SOURCE_SPREADSHEET_ID) type STRING
-      value(PA_SOURCE_SHEET_ID) type ZGSHEET_SHEET_ID optional
-      value(PA_SOURCE_SHEET_NAME) type STRING optional .
-  methods UPDATE_ABAP
-    exporting
-      value(PA_SPREADSHEET) type ZGSPREADSHEET_S .
-  methods GET_JSON
-    returning
-      value(P_GSHEET_JSON) type STRING .
-  methods SET_JSON
-    importing
-      value(P_GSHEET_JSON) type STRING .
-  methods REPEAT_CELL
-    importing
-      !IP_SHEET_ID type STRING
-      !IP_SPREADSHEET_ID type STRING .
-  methods ADD_SHEET
-    importing
-      value(IP_PROPERTY) type ZGSHEET_PROPERTY_S .
-  methods DELETE_SHEET
-    importing
-      value(IP_SHEET_ID) type STRING .
-  methods GET_SHEETS_LIST
-    importing
-      value(PA_SPREADSHEET_ID) type STRING optional
-    returning
-      value(PA_SHEETS_LIST) type ZGSHEET_TT .
-  methods GET_ABAP_OBJ
-    returning
-      value(PA_SPREADSHEET_OBJ) type ZGSPREADSHEET_S .
-protected section.
-private section.
+    METHODS set_title
+      IMPORTING
+        VALUE(ip_title) TYPE string .
+    METHODS create_from_template
+      IMPORTING
+        VALUE(pa_source_spreadsheet_id) TYPE string
+        VALUE(pa_source_sheet_id)       TYPE zgsheet_sheet_id OPTIONAL
+        VALUE(pa_source_sheet_name)     TYPE string OPTIONAL .
+    METHODS update_abap
+      EXPORTING
+        VALUE(pa_spreadsheet) TYPE zgspreadsheet_s .
+    METHODS get_json
+      RETURNING
+        VALUE(p_gsheet_json) TYPE string .
+    METHODS set_json
+      IMPORTING
+        VALUE(p_gsheet_json) TYPE string .
+    METHODS repeat_cell
+      IMPORTING
+        !ip_sheet_id       TYPE string
+        !ip_spreadsheet_id TYPE string .
+    METHODS add_sheet
+      IMPORTING
+        VALUE(ip_property) TYPE zgsheet_property_s .
+    METHODS delete_sheet
+      IMPORTING
+        VALUE(ip_sheet_id) TYPE string .
+    METHODS get_sheets_list
+      IMPORTING
+        VALUE(pa_spreadsheet_id) TYPE string OPTIONAL
+      RETURNING
+        VALUE(pa_sheets_list)    TYPE zgsheet_tt .
+    METHODS get_abap_obj
+      RETURNING
+        VALUE(pa_spreadsheet_obj) TYPE zgspreadsheet_s .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 
-  data GV_JSON_STRING type STRING .
-  data GS_ABAP_SPREADSHEET type ZGSPREADSHEET_S .
+    DATA gv_json_string TYPE string .
+    DATA gs_abap_spreadsheet TYPE zgspreadsheet_s .
 
-  methods UPDATE_SPREADSHEET_PROPERTIES .
-  methods UPDATE_SHEET_PROPERTIES .
-  methods UPDATE_DIMENSION_PROPERTIES .
-  methods UPDATE_NAMED_RANGE .
-  methods ADD_NAMED_RANGE .
-  methods DELETE_NAMED_RANGE .
-  methods AUTO_FILL .
-  methods CUT_PASTE .
-  methods COPY_PASTE .
-  methods MERGE_CELLS .
-  methods UNMERGE_CELLS .
-  methods UPDATE_BORDERS .
-  methods UPDATE_CELLS .
-  methods ADD_FILTER_VIEW .
-  methods APPEND_CELLS .
-  methods CLEAR_BASIC_FILTER .
-  methods DELETE_DIMENSION .
-  methods DELETE_EMBEDDED_OBJECT .
-  methods DELETE_FILTERVIEW .
-  methods DUPLICATE_FILTERVIEW .
-  methods DUPLICATE_SHEET .
-  methods FIND_REPLACE .
-  methods INSERT_DIMENSION .
-  methods INSERT_RANGE .
-  methods MOVE_DIMENSION .
-  methods UPDATE_EMBEDDED_OBJ_POSITION .
-  methods PASTE_DATA .
-  methods TEXT_TO_COLUMNS .
-  methods UPDATE_FILTER_VIEW .
-  methods DELETE_RANGE .
-  methods APPEND_DIMENSION .
+    METHODS update_spreadsheet_properties .
+    METHODS update_sheet_properties .
+    METHODS update_dimension_properties .
+    METHODS update_named_range .
+    METHODS add_named_range .
+    METHODS delete_named_range .
+    METHODS auto_fill .
+    METHODS cut_paste .
+    METHODS copy_paste .
+    METHODS merge_cells .
+    METHODS unmerge_cells .
+    METHODS update_borders .
+    METHODS update_cells .
+    METHODS add_filter_view .
+    METHODS append_cells .
+    METHODS clear_basic_filter .
+    METHODS delete_dimension .
+    METHODS delete_embedded_object .
+    METHODS delete_filterview .
+    METHODS duplicate_filterview .
+    METHODS duplicate_sheet .
+    METHODS find_replace .
+    METHODS insert_dimension .
+    METHODS insert_range .
+    METHODS move_dimension .
+    METHODS update_embedded_obj_position .
+    METHODS paste_data .
+    METHODS text_to_columns .
+    METHODS update_filter_view .
+    METHODS delete_range .
+    METHODS append_dimension .
 ENDCLASS.
 
 
@@ -84,72 +84,72 @@ ENDCLASS.
 CLASS ZCL_GSPREADSHEET IMPLEMENTATION.
 
 
-  method ADD_FILTER_VIEW.
-  endmethod.
+  METHOD add_filter_view.
+  ENDMETHOD.
 
 
-  method ADD_NAMED_RANGE.
-  endmethod.
+  METHOD add_named_range.
+  ENDMETHOD.
 
 
-method ADD_SHEET.
+  METHOD add_sheet.
 
 
-  DATA: ls_request_batch  type ZGSHEET_BATCH_UPDATE_REQ_S,
+    DATA: ls_request_batch  TYPE zgsheet_batch_update_req_s,
 
-        lv_batch_req_obj  type ref to ZCL_GSHEET_BATCH_REQ,
+          lv_batch_req_obj  TYPE REF TO zcl_gsheet_batch_req,
 
-        lv_spreadsheet_id type string.
-  lv_spreadsheet_id =  me->GS_ABAP_SPREADSHEET-SPREADSHEET_ID.
+          lv_spreadsheet_id TYPE string.
+    lv_spreadsheet_id =  me->gs_abap_spreadsheet-spreadsheet_id.
 
-  CREATE OBJECT lv_batch_req_obj type ZCL_GSHEET_BATCH_REQ.
-
-
-
-  CLEAR ls_request_batch.
-  ls_request_batch-ADD_SHEET-PROPERTIES = IP_PROPERTY.
+    CREATE OBJECT lv_batch_req_obj TYPE zcl_gsheet_batch_req.
 
 
 
-  lv_batch_req_obj->ADD_REQUEST( IP_BATCH_REQ = ls_request_batch  ).
-  lv_batch_req_obj->SEND_REQUEST(
-    exporting
-      IP_SPREADSHEET_ID =  lv_spreadsheet_id
+    CLEAR ls_request_batch.
+    ls_request_batch-add_sheet-properties = ip_property.
+
+
+
+    lv_batch_req_obj->add_request( ip_batch_req = ls_request_batch  ).
+    lv_batch_req_obj->send_request(
+      EXPORTING
+        ip_spreadsheet_id =  lv_spreadsheet_id
 *      IP_SHEET_ID       = ip_sheet_ID
-  ).
+    ).
 
-endmethod.
-
-
-  method APPEND_CELLS.
-  endmethod.
+  ENDMETHOD.
 
 
-  method APPEND_DIMENSION.
-  endmethod.
+  METHOD append_cells.
+  ENDMETHOD.
 
 
-  method AUTO_FILL.
-  endmethod.
+  METHOD append_dimension.
+  ENDMETHOD.
 
 
-  method CLEAR_BASIC_FILTER.
-  endmethod.
+  METHOD auto_fill.
+  ENDMETHOD.
 
 
-  method COPY_PASTE.
-  endmethod.
+  METHOD clear_basic_filter.
+  ENDMETHOD.
 
 
-  method CREATE_FROM_TEMPLATE.
+  METHOD copy_paste.
+  ENDMETHOD.
 
-    DATA: LV_REQUEST          TYPE ZGSHEET_COPY_REQ_S,
+
+  METHOD create_from_template.
+
+    DATA: lv_request          TYPE zgsheet_copy_req_s,
 *          LV_GSPREADSHEETS_API TYPE REF TO ZCL_GSPREADSHEET_API,
 *          LV_GSHEETS_API      TYPE REF TO  ZCL_GSPREADSHEET_SHEETS_API,
-          LT_SRC_SHEETS_LIST  TYPE ZGSHEET_TT,
-          LS_SRC_SHEET        TYPE ZGSHEET_S,
-          LS_GSPREADSHEET     TYPE ZGSPREADSHEET_S,
-          LV_GSPREADSHEET_OBJ TYPE REF TO  ZCL_GSPREADSHEET.
+          lt_src_sheets_list  TYPE zgsheet_tt,
+          ls_src_sheet        TYPE zgsheet_s,
+          ls_gspreadsheet     TYPE zgspreadsheet_s,
+          lv_gspreadsheet_obj TYPE REF TO  zcl_gspreadsheet.
 
 *    CREATE OBJECT:
 *          LS_GSPREADSHEET TYPE ZCL_GSPREADSHEET_API,
@@ -157,11 +157,11 @@ endmethod.
 
 ***Create new empty spreadsheet***
 
-    ZCL_GSPREADSHEET_API=>CREATE_NEW_SPREADSHEET(
+    zcl_gspreadsheet_api=>create_new_spreadsheet(
 *      exporting
 *        IP_SPREADSHEET_S =     " Google spreadsheet  structure to create
-      importing
-        EP_SPREADSHEET   =     LV_GSPREADSHEET_OBJ " Google spreadsheet class instance
+      IMPORTING
+        ep_spreadsheet   =     lv_gspreadsheet_obj " Google spreadsheet class instance
     ).
 
 
@@ -170,236 +170,236 @@ endmethod.
 
 
 
-    ME->SET_JSON( P_GSHEET_JSON =  LV_GSPREADSHEET_OBJ->get_json( ) ).
-    LS_GSPREADSHEET  = LV_GSPREADSHEET_OBJ->get_abap_obj( ).
-    CLEAR LV_GSPREADSHEET_OBJ.
-    LT_SRC_SHEETS_LIST  = ME->GET_SHEETS_LIST( PA_SPREADSHEET_ID =   PA_SOURCE_SPREADSHEET_ID ).
+    me->set_json( p_gsheet_json =  lv_gspreadsheet_obj->get_json( ) ).
+    ls_gspreadsheet  = lv_gspreadsheet_obj->get_abap_obj( ).
+    CLEAR lv_gspreadsheet_obj.
+    lt_src_sheets_list  = me->get_sheets_list( pa_spreadsheet_id =   pa_source_spreadsheet_id ).
 
-    LV_REQUEST-DESTINATION_SPREADSHEET_ID = LS_GSPREADSHEET-SPREADSHEET_ID.
+    lv_request-destination_spreadsheet_id = ls_gspreadsheet-spreadsheet_id.
 
 *** Looop all the sheets:
 
-    LOOP AT LT_SRC_SHEETS_LIST INTO  LS_SRC_SHEET.
+    LOOP AT lt_src_sheets_list INTO  ls_src_sheet.
 
 
-      ZCL_GSPREADSHEET_SHEETS_API=>COPY_SHEET(
-       exporting
-         PA_SPREADSHEET_ID =  PA_SOURCE_SPREADSHEET_ID
-         PA_SHEET_ID       =  LS_SRC_SHEET-PROPERTIES-SHEET_ID
-         PA_REQUEST        = LV_REQUEST " Copy to Action request structure
+      zcl_gspreadsheet_sheets_api=>copy_sheet(
+       EXPORTING
+         pa_spreadsheet_id =  pa_source_spreadsheet_id
+         pa_sheet_id       =  ls_src_sheet-properties-sheet_id
+         pa_request        = lv_request " Copy to Action request structure
      ).
 
     ENDLOOP.
-  endmethod.
+  ENDMETHOD.
 
 
-  method CUT_PASTE.
-  endmethod.
+  METHOD cut_paste.
+  ENDMETHOD.
 
 
-  method DELETE_DIMENSION.
-  endmethod.
+  METHOD delete_dimension.
+  ENDMETHOD.
 
 
-  method DELETE_EMBEDDED_OBJECT.
-  endmethod.
+  METHOD delete_embedded_object.
+  ENDMETHOD.
 
 
-  method DELETE_FILTERVIEW.
-  endmethod.
+  METHOD delete_filterview.
+  ENDMETHOD.
 
 
-  method DELETE_NAMED_RANGE.
-  endmethod.
+  METHOD delete_named_range.
+  ENDMETHOD.
 
 
-  method DELETE_RANGE.
-  endmethod.
+  METHOD delete_range.
+  ENDMETHOD.
 
 
-  method DELETE_SHEET.
+  METHOD delete_sheet.
 
-    DATA:    ls_request_batch  type ZGSHEET_BATCH_UPDATE_REQ_S,
+    DATA: ls_request_batch  TYPE zgsheet_batch_update_req_s,
 
-    lv_batch_req_obj  type ref to ZCL_GSHEET_BATCH_REQ,
+          lv_batch_req_obj  TYPE REF TO zcl_gsheet_batch_req,
 
-    lv_spreadsheet_id type string.
-    lv_spreadsheet_id =  me->GS_ABAP_SPREADSHEET-SPREADSHEET_ID.
+          lv_spreadsheet_id TYPE string.
+    lv_spreadsheet_id =  me->gs_abap_spreadsheet-spreadsheet_id.
 
-    CREATE OBJECT lv_batch_req_obj type ZCL_GSHEET_BATCH_REQ.
+    CREATE OBJECT lv_batch_req_obj TYPE zcl_gsheet_batch_req.
 
 
 
     CLEAR ls_request_batch.
-    ls_request_batch-DELETE_SHEET-SHEET_ID = IP_SHEET_ID.
+    ls_request_batch-delete_sheet-sheet_id = ip_sheet_id.
 
 
-    lv_batch_req_obj->ADD_REQUEST( IP_BATCH_REQ = ls_request_batch  ).
-    lv_batch_req_obj->SEND_REQUEST(
-      exporting
-        IP_SPREADSHEET_ID =  lv_spreadsheet_id
+    lv_batch_req_obj->add_request( ip_batch_req = ls_request_batch  ).
+    lv_batch_req_obj->send_request(
+      EXPORTING
+        ip_spreadsheet_id =  lv_spreadsheet_id
 *        IP_SHEET_ID       = ip_sheet_ID
     ).
-  endmethod.
+  ENDMETHOD.
 
 
-  method DUPLICATE_FILTERVIEW.
-  endmethod.
+  METHOD duplicate_filterview.
+  ENDMETHOD.
 
 
-  method DUPLICATE_SHEET.
-  endmethod.
+  METHOD duplicate_sheet.
+  ENDMETHOD.
 
 
-  method FIND_REPLACE.
-  endmethod.
+  METHOD find_replace.
+  ENDMETHOD.
 
 
-  method GET_ABAP_OBJ.
+  METHOD get_abap_obj.
 
-    PA_SPREADSHEET_OBJ = ME->GS_ABAP_SPREADSHEET.
-  endmethod.
-
-
-  method GET_JSON.
-
-  p_gsheet_json = me->GV_JSON_STRING.
-  endmethod.
+    pa_spreadsheet_obj = me->gs_abap_spreadsheet.
+  ENDMETHOD.
 
 
-  method GET_SHEETS_LIST.
+  METHOD get_json.
 
-    DATA: ls_spreadsheet Type ZGSPREADSHEET_S,
-          lv_sheet type  ZGSHEET_S.
+    p_gsheet_json = me->gv_json_string.
+  ENDMETHOD.
 
 
-    ls_spreadsheet  = ZCL_GSPREADSHEET_API=>GET_SPREADSHEET(
-                      PA_SPREADSHEET_ID = me->GS_ABAP_SPREADSHEET-SPREADSHEET_ID
+  METHOD get_sheets_list.
+
+    DATA: ls_spreadsheet TYPE zgspreadsheet_s,
+          lv_sheet       TYPE  zgsheet_s.
+
+
+    ls_spreadsheet  = zcl_gspreadsheet_api=>get_spreadsheet(
+                      pa_spreadsheet_id = me->gs_abap_spreadsheet-spreadsheet_id
 
                   ).
 *
 *
 *                   GET_SPREADSHEET( PA_SPREADSHEET_ID = PA_SPREADSHEET_ID  ).
 
-LOOP AT  ls_spreadsheet-SHEETS INTO lv_sheet.
-WRITE lv_sheet-PROPERTIES-SHEET_ID.
-WRITE lv_sheet-PROPERTIES-TITLE.
-ENDLOOP.
+    LOOP AT  ls_spreadsheet-sheets INTO lv_sheet.
+      WRITE lv_sheet-properties-sheet_id.
+      WRITE lv_sheet-properties-title.
+    ENDLOOP.
 
-    PA_SHEETS_LIST = ls_spreadsheet-SHEETS.
-  endmethod.
-
-
-  method INSERT_DIMENSION.
-  endmethod.
+    pa_sheets_list = ls_spreadsheet-sheets.
+  ENDMETHOD.
 
 
-  method INSERT_RANGE.
-  endmethod.
+  METHOD insert_dimension.
+  ENDMETHOD.
 
 
-  method MERGE_CELLS.
-  endmethod.
+  METHOD insert_range.
+  ENDMETHOD.
 
 
-  method MOVE_DIMENSION.
-  endmethod.
+  METHOD merge_cells.
+  ENDMETHOD.
 
 
-  method PASTE_DATA.
-  endmethod.
+  METHOD move_dimension.
+  ENDMETHOD.
 
 
-  method REPEAT_CELL.
+  METHOD paste_data.
+  ENDMETHOD.
 
-  DATA: ls_request_s type zgsheet_batch_update_reqs_s,
-       lt_list_request type   ZGSHEET_BATCH_UPDATE_REQS_TT ,
-       ls_batch_request type ZGSHEET_BATCH_UPDATE_REQ_S.
+
+  METHOD repeat_cell.
+
+    DATA: ls_request_s     TYPE zgsheet_batch_update_reqs_s,
+          lt_list_request  TYPE   zgsheet_batch_update_reqs_tt,
+          ls_batch_request TYPE zgsheet_batch_update_req_s.
 
 *lv_reqUpdate =
 * '{"requests":[{"repeatCell":{"range":{"sheetId":357392262,"startColumnIndex":1,"endColumnIndex":10,"startRowIndex":0,"endRowIndex":2},"fields":"*",
 * "cell":{"userEnteredValue":{"numberValue":27}}}}],"responseIncludeGridData":true}'.
 
 
-LS_BATCH_REQUEST-REPEAT_CELL-range-sheet_Id =  IP_SHEET_ID.
-LS_BATCH_REQUEST-REPEAT_CELL-range-START_COLUMN_INDEX = 1.
-LS_BATCH_REQUEST-REPEAT_CELL-range-END_COLUMN_INDEX = 10.
-LS_BATCH_REQUEST-REPEAT_CELL-range-START_ROW_INDEX  = 0.
-LS_BATCH_REQUEST-REPEAT_CELL-range-END_ROW_INDEX =  2.
-LS_BATCH_REQUEST-REPEAT_CELL-FIELDS = '*'.
-LS_BATCH_REQUEST-REPEAT_CELL-CELL-USER_ENTERED_VALUE-NUMBER_VALUE = 28.
-APPEND LS_BATCH_REQUEST TO lt_list_request.
- ls_request_s-REQUESTS = lt_list_request.
+    ls_batch_request-repeat_cell-range-sheet_id =  ip_sheet_id.
+    ls_batch_request-repeat_cell-range-start_column_index = 1.
+    ls_batch_request-repeat_cell-range-end_column_index = 10.
+    ls_batch_request-repeat_cell-range-start_row_index  = 0.
+    ls_batch_request-repeat_cell-range-end_row_index =  2.
+    ls_batch_request-repeat_cell-fields = '*'.
+    ls_batch_request-repeat_cell-cell-user_entered_value-number_value = 28.
+    APPEND ls_batch_request TO lt_list_request.
+    ls_request_s-requests = lt_list_request.
 
-    ZCL_GSPREADSHEET_API=>BATCH_UPDATE(
-      exporting
-        IP_SPREADSHEET_ID = IP_SPREADSHEET_ID
+    zcl_gspreadsheet_api=>batch_update(
+      EXPORTING
+        ip_spreadsheet_id = ip_spreadsheet_id
 *        IP_SHEET_ID       = IP_SHEET_ID
-        IP_BATCH_REQS      =    ls_request_s  " Request structure for spreadsheet batchupdate
+        ip_batch_reqs      =    ls_request_s  " Request structure for spreadsheet batchupdate
     ).
-  endmethod.
+  ENDMETHOD.
 
 
-  method SET_JSON.
+  METHOD set_json.
 
-    me->GV_JSON_STRING = p_gsheet_json.
+    me->gv_json_string = p_gsheet_json.
 *** Update internal structure that modelize the spreadsheet
-    me->UPDATE_ABAP( ).
+    me->update_abap( ).
 
-  endmethod.
-
-
-  method SET_TITLE.
-
-    ME->GS_ABAP_SPREADSHEET-PROPERTIES-TITLE = IP_TITLE.
-  endmethod.
+  ENDMETHOD.
 
 
-  method TEXT_TO_COLUMNS.
-  endmethod.
+  METHOD set_title.
+
+    me->gs_abap_spreadsheet-properties-title = ip_title.
+  ENDMETHOD.
 
 
-  method UNMERGE_CELLS.
-  endmethod.
+  METHOD text_to_columns.
+  ENDMETHOD.
 
 
-  method UPDATE_ABAP.
-
-/ui2/cl_json=>deserialize( EXPORTING json = ME->GV_JSON_STRING pretty_name = /ui2/cl_json=>pretty_mode-camel_case CHANGING data = PA_SPREADSHEET ).
-ME->GS_ABAP_SPREADSHEET = PA_SPREADSHEET.
+  METHOD unmerge_cells.
+  ENDMETHOD.
 
 
-  endmethod.
+  METHOD update_abap.
+
+    /ui2/cl_json=>deserialize( EXPORTING json = me->gv_json_string pretty_name = /ui2/cl_json=>pretty_mode-camel_case CHANGING data = pa_spreadsheet ).
+    me->gs_abap_spreadsheet = pa_spreadsheet.
 
 
-  method UPDATE_BORDERS.
-  endmethod.
+  ENDMETHOD.
 
 
-  method UPDATE_CELLS.
-  endmethod.
+  METHOD update_borders.
+  ENDMETHOD.
 
 
-  method UPDATE_DIMENSION_PROPERTIES.
-  endmethod.
+  METHOD update_cells.
+  ENDMETHOD.
 
 
-  method UPDATE_EMBEDDED_OBJ_POSITION.
-  endmethod.
+  METHOD update_dimension_properties.
+  ENDMETHOD.
 
 
-  method UPDATE_FILTER_VIEW.
-  endmethod.
+  METHOD update_embedded_obj_position.
+  ENDMETHOD.
 
 
-  method UPDATE_NAMED_RANGE.
-  endmethod.
+  METHOD update_filter_view.
+  ENDMETHOD.
 
 
-  method UPDATE_SHEET_PROPERTIES.
-  endmethod.
+  METHOD update_named_range.
+  ENDMETHOD.
 
 
-  method UPDATE_SPREADSHEET_PROPERTIES.
-  endmethod.
+  METHOD update_sheet_properties.
+  ENDMETHOD.
+
+
+  METHOD update_spreadsheet_properties.
+  ENDMETHOD.
 ENDCLASS.

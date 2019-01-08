@@ -1,24 +1,24 @@
-class ZCL_GSHEET_VALUE_RANGE definition
-  public
-  final
-  create public .
+CLASS zcl_gsheet_value_range DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  data GT_VALUES type ZGSHEET_ARRAY_STRING_TT .
-  data GT_VALUES_STRING type ZGSHEET_STRING_TT .
-  data GS_VALUE_RANGE type ZGSHEET_VALUE_RANGES_S .
-  data GV_COLUMN_NUM type INT4 .
+    DATA gt_values TYPE zgsheet_array_string_tt .
+    DATA gt_values_string TYPE zgsheet_string_tt .
+    DATA gs_value_range TYPE zgsheet_value_ranges_s .
+    DATA gv_column_num TYPE int4 .
 
-  methods APPEND_CELL_VALUE
-    importing
-      !IP_VALUE type ANY .
-  methods MOVE_NEXT_ROW .
-  methods GET_COLUMN_NUMBER
-    returning
-      value(EP_COLUMN_NUMBER) type INT4 .
-protected section.
-private section.
+    METHODS append_cell_value
+      IMPORTING
+        !ip_value TYPE any .
+    METHODS move_next_row .
+    METHODS get_column_number
+      RETURNING
+        VALUE(ep_column_number) TYPE int4 .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -26,26 +26,26 @@ ENDCLASS.
 CLASS ZCL_GSHEET_VALUE_RANGE IMPLEMENTATION.
 
 
-  method APPEND_CELL_VALUE.
+  METHOD append_cell_value.
 
 
 
-    APPEND IP_VALUE TO me->GT_VALUES_STRING.
-  endmethod.
+    APPEND ip_value TO me->gt_values_string.
+  ENDMETHOD.
 
 
-  method GET_COLUMN_NUMBER.
+  METHOD get_column_number.
 
 
 
- EP_COLUMN_NUMBER = ME->GV_COLUMN_NUM.
-  endmethod.
+    ep_column_number = me->gv_column_num.
+  ENDMETHOD.
 
 
-  method MOVE_NEXT_ROW.
+  METHOD move_next_row.
 
 *     APPEND GT_VALUES_STRING TO  me->GT_VALUES.
-    APPEND GT_VALUES_STRING TO me->GS_VALUE_RANGE-VALUES.
-     CLEAR GT_VALUES_STRING.
-  endmethod.
+    APPEND gt_values_string TO me->gs_value_range-values.
+    CLEAR gt_values_string.
+  ENDMETHOD.
 ENDCLASS.

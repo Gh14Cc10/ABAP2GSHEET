@@ -3,7 +3,7 @@
 *&---------------------------------------------------------------------*
 *&
 *&---------------------------------------------------------------------*
-REPORT ZGOOGLE_DEMO_MB51.
+REPORT zgoogle_demo_mb51.
 
 SELECTION-SCREEN: BEGIN OF BLOCK bl1 WITH FRAME TITLE TEXT-002.
 
@@ -11,21 +11,21 @@ SELECTION-SCREEN: BEGIN OF BLOCK bl1 WITH FRAME TITLE TEXT-002.
 
 
 
-selection-screen begin of line.
-selection-screen comment (17) text-004.
-selection-screen END OF LINE.
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT (17) TEXT-004.
+SELECTION-SCREEN END OF LINE.
 
-selection-screen begin of line.
-PARAMETERS: p_title type string OBLIGATORY LOWER CASE.
-selection-screen END OF LINE.
+SELECTION-SCREEN BEGIN OF LINE.
+PARAMETERS: p_title TYPE string OBLIGATORY LOWER CASE.
+SELECTION-SCREEN END OF LINE.
 
-selection-screen begin of line.
-selection-screen comment (16) text-005.
-selection-screen END OF LINE.
+SELECTION-SCREEN BEGIN OF LINE.
+SELECTION-SCREEN COMMENT (16) TEXT-005.
+SELECTION-SCREEN END OF LINE.
 
-selection-screen begin of line.
-PARAMETERS: p_vari type c length 16 OBLIGATORY LOWER CASE DEFAULT 'GSHEET_VAR'.
-selection-screen END OF LINE.
+SELECTION-SCREEN BEGIN OF LINE.
+PARAMETERS: p_vari TYPE c LENGTH 16 OBLIGATORY LOWER CASE DEFAULT 'GSHEET_VAR'.
+SELECTION-SCREEN END OF LINE.
 
 
 
@@ -41,22 +41,22 @@ DATA lr_alv_data  TYPE REF TO data.
 
 
 *
-DATA: lt_values      type ZGSHEET_ARRAY_STRING_TT,
+DATA: lt_values      TYPE zgsheet_array_string_tt,
       lt_value       LIKE LINE OF lt_values,
-      lv_value_range TYPE ZGSHEET_VALUE_RANGES_S.
+      lv_value_range TYPE zgsheet_value_ranges_s.
 
 
 
-DATA: LV_COLUMN_N      type INT3,
-      ls_request_batch type ZGSHEET_BATCH_UPDATE_REQ_S.
+DATA: lv_column_n      TYPE int3,
+      ls_request_batch TYPE zgsheet_batch_update_req_s.
 
-DATA: lv_batch_req_obj   type ref to ZCL_GSHEET_BATCH_REQ,
-      lv_spreadsheet_obj type ref to ZCL_GSPREADSHEET,
-      ls_spreadsheet     type ZGSPREADSHEET_S.
+DATA: lv_batch_req_obj   TYPE REF TO zcl_gsheet_batch_req,
+      lv_spreadsheet_obj TYPE REF TO zcl_gspreadsheet,
+      ls_spreadsheet     TYPE zgspreadsheet_s.
 
-FIELD-SYMBOLS <Ft_alv_data>   TYPE ANY TABLE.
-FIELD-SYMBOLS <FS_line>   TYPE ANY.
-FIELD-SYMBOLS <FS_field>   TYPE ANY.
+FIELD-SYMBOLS <ft_alv_data>   TYPE ANY TABLE.
+FIELD-SYMBOLS <fs_line>   TYPE any.
+FIELD-SYMBOLS <fs_field>   TYPE any.
 
 
 
@@ -68,24 +68,24 @@ cl_salv_bs_runtime_info=>set(
 
 
 * Submit Report
-SUBMIT RM07DOCS
+SUBMIT rm07docs
   USING SELECTION-SET p_vari
   AND RETURN.
 *Reading ALV from memory
 TRY.
 
-    cl_salv_bs_runtime_info=>GET_DATA_REF(
-      importing
-        R_DATA                     = lr_alv_data
+    cl_salv_bs_runtime_info=>get_data_ref(
+      IMPORTING
+        r_data                     = lr_alv_data
     ).
 
     ASSIGN lr_alv_data->* TO <ft_alv_data>.
 
     DATA:
-      lo_tabledescr type ref to cl_abap_tabledescr,
-      lt_keyfields  type abap_keydescr_tab,
-      ls_column     type abap_keydescr,
-      lv_col_name   type c length 30.
+      lo_tabledescr TYPE REF TO cl_abap_tabledescr,
+      lt_keyfields  TYPE abap_keydescr_tab,
+      ls_column     TYPE abap_keydescr,
+      lv_col_name   TYPE c LENGTH 30.
 
 
     .
@@ -102,23 +102,23 @@ cl_salv_bs_runtime_info=>clear_all( ).
 
 
 
-CREATE OBJECT lv_batch_req_obj type ZCL_GSHEET_BATCH_REQ.
+CREATE OBJECT lv_batch_req_obj TYPE zcl_gsheet_batch_req.
 
 *Set spreadsheet title
-ls_spreadsheet-PROPERTIES-TITLE = p_title.
+ls_spreadsheet-properties-title = p_title.
 
 
 
 *Google spreadsheet creation on google drive
-ZCL_GSPREADSHEET_API=>CREATE_NEW_SPREADSHEET(
-  exporting
-    IP_SPREADSHEET_S =     ls_spreadsheet  " Google sheet object structure
-  importing
-    EP_SPREADSHEET   =     lv_spreadsheet_obj " Google sheet object structure
+zcl_gspreadsheet_api=>create_new_spreadsheet(
+  EXPORTING
+    ip_spreadsheet_s =     ls_spreadsheet  " Google sheet object structure
+  IMPORTING
+    ep_spreadsheet   =     lv_spreadsheet_obj " Google sheet object structure
 ).
 CLEAR ls_spreadsheet.
 *Retrieve the spreadsheet created
-ls_spreadsheet = LV_SPREADSHEET_OBJ->GET_ABAP_OBJ( ).
+ls_spreadsheet = lv_spreadsheet_obj->get_abap_obj( ).
 
 
 
@@ -157,24 +157,24 @@ APPEND 'Company' TO lt_value.
 APPEND  lt_value TO lt_values.
 
 *Count number of coulumn
-DESCRIBE TABLE lt_value LINES LV_COLUMN_N.
+DESCRIBE TABLE lt_value LINES lv_column_n.
 CLEAR lt_value.
 
 
 *Set the header size
-ls_request_batch-REPEAT_CELL-RANGE-START_COLUMN_INDEX = '0'.
-ls_request_batch-REPEAT_CELL-RANGE-END_ROW_INDEX = '1'.
-ls_request_batch-REPEAT_CELL-RANGE-END_COLUMN_INDEX = LV_COLUMN_N.
-ls_request_batch-REPEAT_CELL-FIELDS = 'USER_ENTERED_FORMAT'.
-ls_request_batch-REPEAT_CELL-CELL-USER_ENTERED_FORMAT-BACKGROUND_COLOR-RED = '0.2'.
-ls_request_batch-REPEAT_CELL-CELL-USER_ENTERED_FORMAT-BACKGROUND_COLOR-BLUE = '0.8'.
-ls_request_batch-REPEAT_CELL-CELL-USER_ENTERED_FORMAT-BACKGROUND_COLOR-GREEN = '1'.
-ls_request_batch-REPEAT_CELL-CELL-USER_ENTERED_FORMAT-BACKGROUND_COLOR-ALPHA = '1'.
-LV_BATCH_REQ_OBJ->ADD_REQUEST(
-  exporting
-    IP_BATCH_REQ           =   ls_request_batch  " Request structure for spreadsheet batchupdate
+ls_request_batch-repeat_cell-range-start_column_index = '0'.
+ls_request_batch-repeat_cell-range-end_row_index = '1'.
+ls_request_batch-repeat_cell-range-end_column_index = lv_column_n.
+ls_request_batch-repeat_cell-fields = 'USER_ENTERED_FORMAT'.
+ls_request_batch-repeat_cell-cell-user_entered_format-background_color-red = '0.2'.
+ls_request_batch-repeat_cell-cell-user_entered_format-background_color-blue = '0.8'.
+ls_request_batch-repeat_cell-cell-user_entered_format-background_color-green = '1'.
+ls_request_batch-repeat_cell-cell-user_entered_format-background_color-alpha = '1'.
+lv_batch_req_obj->add_request(
+  EXPORTING
+    ip_batch_req           =   ls_request_batch  " Request structure for spreadsheet batchupdate
 ).
-LV_BATCH_REQ_OBJ->SEND_REQUEST( IP_SPREADSHEET_ID = ls_spreadsheet-SPREADSHEET_ID ).
+lv_batch_req_obj->send_request( ip_spreadsheet_id = ls_spreadsheet-spreadsheet_id ).
 CLEAR ls_request_batch.
 
 
@@ -182,41 +182,41 @@ CLEAR ls_request_batch.
 ** Writing values
 
 *First cell where to start the table
-lv_value_range-RANGE = 'A1'.
+lv_value_range-range = 'A1'.
 
-APPEND 'WERKS' TO LT_KEYFIELDS.
-APPEND 'NAME1' TO LT_KEYFIELDS.
-APPEND 'LGORT' TO LT_KEYFIELDS.
-APPEND 'MATNR' TO LT_KEYFIELDS.
-APPEND 'MAKTX' TO LT_KEYFIELDS.
-APPEND 'GRUND' TO LT_KEYFIELDS.
-APPEND 'KZBEW' TO LT_KEYFIELDS.
-APPEND 'VGART' TO LT_KEYFIELDS.
-APPEND 'BTEXT' TO LT_KEYFIELDS.
-APPEND 'MENGE' TO LT_KEYFIELDS.
-APPEND 'MEINS' TO LT_KEYFIELDS.
-APPEND 'SHKZG' TO LT_KEYFIELDS.
-APPEND 'MBLNR' TO LT_KEYFIELDS.
-APPEND 'ZEILE' TO LT_KEYFIELDS.
-APPEND 'BUDAT' TO LT_KEYFIELDS.
-APPEND 'MJAHR' TO LT_KEYFIELDS.
-APPEND 'USNAM' TO LT_KEYFIELDS.
-APPEND 'XBLNR' TO LT_KEYFIELDS.
-APPEND 'LIFNR' TO LT_KEYFIELDS.
-APPEND 'EBELN' TO LT_KEYFIELDS.
-APPEND 'EBELP' TO LT_KEYFIELDS.
-APPEND 'DMBTR' TO LT_KEYFIELDS.
-APPEND 'WAERS' TO LT_KEYFIELDS.
-APPEND 'BUKRS' TO LT_KEYFIELDS.
+APPEND 'WERKS' TO lt_keyfields.
+APPEND 'NAME1' TO lt_keyfields.
+APPEND 'LGORT' TO lt_keyfields.
+APPEND 'MATNR' TO lt_keyfields.
+APPEND 'MAKTX' TO lt_keyfields.
+APPEND 'GRUND' TO lt_keyfields.
+APPEND 'KZBEW' TO lt_keyfields.
+APPEND 'VGART' TO lt_keyfields.
+APPEND 'BTEXT' TO lt_keyfields.
+APPEND 'MENGE' TO lt_keyfields.
+APPEND 'MEINS' TO lt_keyfields.
+APPEND 'SHKZG' TO lt_keyfields.
+APPEND 'MBLNR' TO lt_keyfields.
+APPEND 'ZEILE' TO lt_keyfields.
+APPEND 'BUDAT' TO lt_keyfields.
+APPEND 'MJAHR' TO lt_keyfields.
+APPEND 'USNAM' TO lt_keyfields.
+APPEND 'XBLNR' TO lt_keyfields.
+APPEND 'LIFNR' TO lt_keyfields.
+APPEND 'EBELN' TO lt_keyfields.
+APPEND 'EBELP' TO lt_keyfields.
+APPEND 'DMBTR' TO lt_keyfields.
+APPEND 'WAERS' TO lt_keyfields.
+APPEND 'BUKRS' TO lt_keyfields.
 
 
-LOOP AT <Ft_alv_data> ASSIGNING <FS_LINE>.
-  LOOP AT  LT_KEYFIELDS INTO LS_COLUMN.
-    ASSIGN COMPONENT LS_COLUMN-NAME OF STRUCTURE <FS_LINE> TO  <FS_FIELD>.
+LOOP AT <ft_alv_data> ASSIGNING <fs_line>.
+  LOOP AT  lt_keyfields INTO ls_column.
+    ASSIGN COMPONENT ls_column-name OF STRUCTURE <fs_line> TO  <fs_field>.
 
-    IF SY-SUBRC EQ 0.
+    IF sy-subrc EQ 0.
 
-      APPEND  <FS_FIELD>  TO lt_value.
+      APPEND  <fs_field>  TO lt_value.
     ENDIF.
 
   ENDLOOP.
@@ -227,15 +227,15 @@ ENDLOOP.
 
 
 
-lv_value_range-VALUES = lt_values.
+lv_value_range-values = lt_values.
 
 
-ZCL_GSPREADSHEET_VALUES_API=>APPEND(
-  exporting
-    IP_SPREADSHEET_ID =   ls_spreadsheet-SPREADSHEET_ID
-    IP_RANGE          =  'A1'
-    IP_VALUE_RANGE    =    lv_Value_Range " Values within a range of the spreadsheet structure
+zcl_gspreadsheet_values_api=>append(
+  EXPORTING
+    ip_spreadsheet_id =   ls_spreadsheet-spreadsheet_id
+    ip_range          =  'A1'
+    ip_value_range    =    lv_value_range " Values within a range of the spreadsheet structure
 
 ).
-WRITE text-006.
-WRITE ls_spreadsheet-SPREADSHEET_URL.
+WRITE TEXT-006.
+WRITE ls_spreadsheet-spreadsheet_url.

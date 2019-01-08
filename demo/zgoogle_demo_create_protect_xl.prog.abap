@@ -5,28 +5,28 @@
 *& - Protect a range with limiting the user that rights to edit it
 *& - Share to an user
 *&---------------------------------------------------------------------*
-REPORT ZGOOGLE_DEMO_CREATE_PROTECT_XL.
+REPORT zgoogle_demo_create_protect_xl.
 
 
 
-DATA: lo_batch_req_obj type ref to ZCL_GSHEET_BATCH_REQ,
-      lo_spreadsheet_obj type ref to ZCL_GSPREADSHEET,
-      ls_spreadsheet type ZGSPREADSHEET_S,
-      ls_batch_request type ZGSHEET_BATCH_UPDATE_REQ_S.
+DATA: lo_batch_req_obj   TYPE REF TO zcl_gsheet_batch_req,
+      lo_spreadsheet_obj TYPE REF TO zcl_gspreadsheet,
+      ls_spreadsheet     TYPE zgspreadsheet_s,
+      ls_batch_request   TYPE zgsheet_batch_update_req_s.
 
-CREATE OBJECT lo_batch_req_obj type ZCL_GSHEET_BATCH_REQ.
+CREATE OBJECT lo_batch_req_obj TYPE zcl_gsheet_batch_req.
 
 *Local spreadsheet
-ls_spreadsheet-PROPERTIES-TITLE = 'NewSpreadsheetTest'.
+ls_spreadsheet-properties-title = 'NewSpreadsheetTest'.
 
 
 
 *Creaton on google drive
-ZCL_GSPREADSHEET_API=>CREATE_NEW_SPREADSHEET(
-  exporting
-    IP_SPREADSHEET_S =     ls_spreadsheet  " Google sheet object structure
-  importing
-    EP_SPREADSHEET   =     lo_spreadsheet_obj " Google sheet object structure
+zcl_gspreadsheet_api=>create_new_spreadsheet(
+  EXPORTING
+    ip_spreadsheet_s =     ls_spreadsheet  " Google sheet object structure
+  IMPORTING
+    ep_spreadsheet   =     lo_spreadsheet_obj " Google sheet object structure
 ).
 
 
@@ -35,57 +35,57 @@ ZCL_GSPREADSHEET_API=>CREATE_NEW_SPREADSHEET(
 
 
 * Massive update of newly created spreadsheeet
-ls_spreadsheet = LO_SPREADSHEET_OBJ->GET_ABAP_OBJ( ).
-LS_BATCH_REQUEST-REPEAT_CELL-range-sheet_Id =  ''.
-LS_BATCH_REQUEST-REPEAT_CELL-range-START_COLUMN_INDEX = 1.
-LS_BATCH_REQUEST-REPEAT_CELL-range-END_COLUMN_INDEX = 10.
-LS_BATCH_REQUEST-REPEAT_CELL-range-START_ROW_INDEX  = 0.
-LS_BATCH_REQUEST-REPEAT_CELL-range-END_ROW_INDEX =  2.
-LS_BATCH_REQUEST-REPEAT_CELL-FIELDS = '*'.
-LS_BATCH_REQUEST-REPEAT_CELL-CELL-USER_ENTERED_VALUE-NUMBER_VALUE = 28.
+ls_spreadsheet = lo_spreadsheet_obj->get_abap_obj( ).
+ls_batch_request-repeat_cell-range-sheet_id =  ''.
+ls_batch_request-repeat_cell-range-start_column_index = 1.
+ls_batch_request-repeat_cell-range-end_column_index = 10.
+ls_batch_request-repeat_cell-range-start_row_index  = 0.
+ls_batch_request-repeat_cell-range-end_row_index =  2.
+ls_batch_request-repeat_cell-fields = '*'.
+ls_batch_request-repeat_cell-cell-user_entered_value-number_value = 28.
 
- lo_batch_req_obj->ADD_REQUEST( IP_BATCH_REQ = LS_BATCH_REQUEST ).
+lo_batch_req_obj->add_request( ip_batch_req = ls_batch_request ).
 
 CLEAR ls_batch_request.
 * Protect range of cell
-ls_batch_request-ADD_PROTECTED_RANGE-PROTECTED_RANGE-RANGE-SHEET_ID = '0'.
-ls_batch_request-ADD_PROTECTED_RANGE-PROTECTED_RANGE-RANGE-START_ROW_INDEX = '1'.
-ls_batch_request-ADD_PROTECTED_RANGE-PROTECTED_RANGE-RANGE-end_ROW_INDEX = '20'.
-ls_batch_request-ADD_PROTECTED_RANGE-PROTECTED_RANGE-RANGE-END_COLUMN_INDEX = '7'.
-ls_batch_request-ADD_PROTECTED_RANGE-PROTECTED_RANGE-RANGE-START_COLUMN_INDEX = '6'.
-ls_batch_request-ADD_PROTECTED_RANGE-PROTECTED_RANGE-DESCRIPTION ='no touch area'.
-ls_batch_request-ADD_PROTECTED_RANGE-PROTECTED_RANGE-WARNING_ONLY = 'false'.
-ls_batch_request-ADD_PROTECTED_RANGE-PROTECTED_RANGE-REQUESTING_USER_CAN_EDIT = 'false'.
+ls_batch_request-add_protected_range-protected_range-range-sheet_id = '0'.
+ls_batch_request-add_protected_range-protected_range-range-start_row_index = '1'.
+ls_batch_request-add_protected_range-protected_range-range-end_row_index = '20'.
+ls_batch_request-add_protected_range-protected_range-range-end_column_index = '7'.
+ls_batch_request-add_protected_range-protected_range-range-start_column_index = '6'.
+ls_batch_request-add_protected_range-protected_range-description ='no touch area'.
+ls_batch_request-add_protected_range-protected_range-warning_only = 'false'.
+ls_batch_request-add_protected_range-protected_range-requesting_user_can_edit = 'false'.
 
-DATA lv_user  type string.
+DATA lv_user  TYPE string.
 lv_user  = 'micael.teweldemedhin@techedgegroup.com'.
-APPEND lv_user  to ls_batch_request-ADD_PROTECTED_RANGE-PROTECTED_RANGE-EDITORS-USERS.
+APPEND lv_user  TO ls_batch_request-add_protected_range-protected_range-editors-users.
 lv_user  = 'alessandro.iannacci@techedgegroup.com'.
-APPEND lv_user  to ls_batch_request-ADD_PROTECTED_RANGE-PROTECTED_RANGE-EDITORS-USERS.
+APPEND lv_user  TO ls_batch_request-add_protected_range-protected_range-editors-users.
 
-ls_batch_request-ADD_PROTECTED_RANGE-PROTECTED_RANGE-EDITORS-DOMAIN_USERS_CAN_EDIT = 'false'.
+ls_batch_request-add_protected_range-protected_range-editors-domain_users_can_edit = 'false'.
 
-lo_batch_req_obj->ADD_REQUEST( IP_BATCH_REQ = LS_BATCH_REQUEST ).
+lo_batch_req_obj->add_request( ip_batch_req = ls_batch_request ).
 
- LO_BATCH_REQ_OBJ->SEND_REQUEST(
-   exporting
-     IP_SPREADSHEET_ID = ls_spreadsheet-SPREADSHEET_ID
+lo_batch_req_obj->send_request(
+  EXPORTING
+    ip_spreadsheet_id = ls_spreadsheet-spreadsheet_id
 *     IP_SHEET_ID       = '0'
- ).
+).
 
 ***Share the new excel
- DATA: ls_permission type zgdrive_permission_s.
+DATA: ls_permission TYPE zgdrive_permission_s.
 
 
 
 
-LS_PERMISSION-ROLE = 'writer'.
-LS_PERMISSION-type = 'user'.
-LS_PERMISSION-email_address = 'tewe88@gmail.com'.
+ls_permission-role = 'writer'.
+ls_permission-type = 'user'.
+ls_permission-email_address = 'tewe88@gmail.com'.
 
 *Creating new permission and share
-ZCL_GDRIVE_PERMISSION_API=>CREATE(
-  exporting
-    IP_SPREADSHEET_ID =  ls_spreadsheet-SPREADSHEET_ID" Spreadsheet where to apply the permission
-    IP_PERMISSION     =  ls_permission   " A permisssione for a google drive file
+zcl_gdrive_permission_api=>create(
+  EXPORTING
+    ip_spreadsheet_id =  ls_spreadsheet-spreadsheet_id" Spreadsheet where to apply the permission
+    ip_permission     =  ls_permission   " A permisssione for a google drive file
 ).

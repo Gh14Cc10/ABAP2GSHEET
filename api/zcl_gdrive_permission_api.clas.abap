@@ -1,21 +1,21 @@
-class ZCL_GDRIVE_PERMISSION_API definition
-  public
-  inheriting from ZCL_GOOGLE_HTTP_API
-  final
-  create public .
+CLASS zcl_gdrive_permission_api DEFINITION
+  PUBLIC
+  INHERITING FROM zcl_google_http_api
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  constants GC_ENDPOINT_URL type STRING value 'https://www.googleapis.com/drive/v3/files/fileId/permissions' ##NO_TEXT.
+    CONSTANTS gc_endpoint_url TYPE string VALUE 'https://www.googleapis.com/drive/v3/files/fileId/permissions' ##NO_TEXT.
 
-  class-methods CREATE
-    importing
-      value(IP_SPREADSHEET_ID) type STRING
-      value(IP_PERMISSION) type ZGDRIVE_PERMISSION_S .
-  class-methods DELETE .
-  class-methods GET_ALL .
-protected section.
-private section.
+    CLASS-METHODS create
+      IMPORTING
+        VALUE(ip_spreadsheet_id) TYPE string
+        VALUE(ip_permission)     TYPE zgdrive_permission_s .
+    CLASS-METHODS delete .
+    CLASS-METHODS get_all .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 
@@ -23,15 +23,15 @@ ENDCLASS.
 CLASS ZCL_GDRIVE_PERMISSION_API IMPLEMENTATION.
 
 
-method CREATE.
+  METHOD create.
 
 
 
-DATA: lt_param        TYPE tihttpnvp,
-      ls_param        TYPE ihttpnvp,
-      lv_response type string,
-      lv_target        type string value GC_ENDPOINT_URL,
-      lv_json_req     TYPE string.
+    DATA: lt_param    TYPE tihttpnvp,
+          ls_param    TYPE ihttpnvp,
+          lv_response TYPE string,
+          lv_target   TYPE string VALUE gc_endpoint_url,
+          lv_json_req TYPE string.
 *CREATE OBJECT GOBJECT TYPE ZCL_GOOGLE_HTTP_API.
 *ls_param-name = 'mimeType'.
 *ls_param-value = '1T8ApYlNVZdW7LlXLdeBIFqwn5Rf4fB0hfi63TU15jak'.
@@ -45,28 +45,28 @@ DATA: lt_param        TYPE tihttpnvp,
 *APPEND ls_param TO lt_param.
 
 
-lv_json_req = '{"role":"writer","type":"user","emailAddress":"micael.teweldemedhin@techedgegroup.com"}'.
+    lv_json_req = '{"role":"writer","type":"user","emailAddress":"micael.teweldemedhin@techedgegroup.com"}'.
 
 
-ZCL_GOOGLE_HTTP_API=>DECODE_ABAP2JSON(
-  importing
-    EP_JSON      =  lv_json_req
-  changing
-    CP_ABAP_DATA = IP_PERMISSION
-).
+    zcl_google_http_api=>decode_abap2json(
+      IMPORTING
+        ep_json      =  lv_json_req
+      CHANGING
+        cp_abap_data = ip_permission
+    ).
 
-REPLACE 'fileId'  WITH IP_SPREADSHEET_ID INTO lv_target .
+    REPLACE 'fileId'  WITH ip_spreadsheet_id INTO lv_target .
 
 
-ZCL_GOOGLE_HTTP_API=>SEND_POST_REQUEST(
-  exporting
-    IP_TARGET          = lv_target
-    IP_PARAM_KIND      = 'H'
-    TP_PARAM           =  lt_param " HTTP Framework (iHTTP) Table Name/Value Pairs
-    IP_JSON_REQUEST    = lv_json_req
-  importing
-    EP_RESPONSE_STRING = LV_RESPONSE
-).
+    zcl_google_http_api=>send_post_request(
+      EXPORTING
+        ip_target          = lv_target
+        ip_param_kind      = 'H'
+        tp_param           =  lt_param " HTTP Framework (iHTTP) Table Name/Value Pairs
+        ip_json_request    = lv_json_req
+      IMPORTING
+        ep_response_string = lv_response
+    ).
 
 *SEND_POST_REQUEST(
 *  exporting
@@ -77,15 +77,15 @@ ZCL_GOOGLE_HTTP_API=>SEND_POST_REQUEST(
 *  importing
 *    PE_RESPONSE_STRING =  LV_RESPONSE
 *).
-  endmethod.
+  ENDMETHOD.
 
 
-  method DELETE.
+  METHOD delete.
 
 
-  endmethod.
+  ENDMETHOD.
 
 
-  method GET_ALL.
-  endmethod.
+  METHOD get_all.
+  ENDMETHOD.
 ENDCLASS.

@@ -1,30 +1,30 @@
-class ZIF_GSHEET_REQUEST definition
-  public
-  final
-  create public .
+CLASS zif_gsheet_request DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  types ZTEST_TYPE type ZGSHEET_BATCH_UPD_RESP_S .
+    TYPES ztest_type TYPE zgsheet_batch_upd_resp_s .
 
-  data GV_SINGLE_REQUEST type ZGSHEET_REQUEST_S .
+    DATA gv_single_request TYPE zgsheet_request_s .
 
-  methods CONSTRUCTOR
-    importing
-      value(P_TYPE) type ANY .
-  methods SEND_REQUEST
-    importing
-      value(IP_SPREADSHEET_ID) type STRING
-      value(IP_SHEET_ID) type STRING .
-  methods ADD_REQUEST
-    importing
-      value(IP_BATCH_REQ) like GV_SINGLE_REQUEST optional
-      value(IP_BATCH_UPD_VALUE_REQ) type ZGSHEET_BATCH_UPDATE_VAL_REQ_S optional .
-protected section.
-private section.
+    METHODS constructor
+      IMPORTING
+        VALUE(p_type) TYPE any .
+    METHODS send_request
+      IMPORTING
+        VALUE(ip_spreadsheet_id) TYPE string
+        VALUE(ip_sheet_id)       TYPE string .
+    METHODS add_request
+      IMPORTING
+        VALUE(ip_batch_req)           LIKE gv_single_request OPTIONAL
+        VALUE(ip_batch_upd_value_req) TYPE zgsheet_batch_update_val_req_s OPTIONAL .
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 
-  types REQUESTS_LIST_TY type ZGSHEET_REQUESTS_S .
-  types REQUEST_TY type ZGSHEET_REQUEST_S .
+    TYPES requests_list_ty TYPE zgsheet_requests_s .
+    TYPES request_ty TYPE zgsheet_request_s .
 ENDCLASS.
 
 
@@ -32,20 +32,20 @@ ENDCLASS.
 CLASS ZIF_GSHEET_REQUEST IMPLEMENTATION.
 
 
-  method ADD_REQUEST.
+  METHOD add_request.
 *    IF ME->GV_REQUEST-REQUESTS IS NOT INITIAL.
 *    APPEND IP_BATCH_REQ TO ME->GV_REQUEST-REQUESTS.
 *    ENDIF.
 
-  endmethod.
+  ENDMETHOD.
 
 
-  method CONSTRUCTOR.
+  METHOD constructor.
 
-  endmethod.
+  ENDMETHOD.
 
 
-  method SEND_REQUEST.
+  METHOD send_request.
 
 *        ZCL_GSPREADSHEET_API=>BATCH_UPDATE(
 *      exporting
@@ -56,5 +56,5 @@ CLASS ZIF_GSHEET_REQUEST IMPLEMENTATION.
 
 
 *ZIF_GSHEET_REQ=>GV_REQUEST_LIST-DATA = 10.
-  endmethod.
+  ENDMETHOD.
 ENDCLASS.

@@ -7,13 +7,13 @@
 *& -
 *& -
 *&---------------------------------------------------------------------*
-REPORT ZGOOGLE_DEMO_ADD_SHEET.
+REPORT zgoogle_demo_add_sheet.
 
-   DATA:  lo_spreadsheet_obj type ref to ZCL_GSPREADSHEET,
-      ls_spreadsheet type ZGSPREADSHEET_S,
-      lt_sheets type ZGSHEET_TT,
-      ls_sheet type ZGSHEET_S,
-      ls_batch_request type ZGSHEET_BATCH_UPDATE_REQ_S.
+DATA: lo_spreadsheet_obj TYPE REF TO zcl_gspreadsheet,
+      ls_spreadsheet     TYPE zgspreadsheet_s,
+      lt_sheets          TYPE zgsheet_tt,
+      ls_sheet           TYPE zgsheet_s,
+      ls_batch_request   TYPE zgsheet_batch_update_req_s.
 
 
 
@@ -22,31 +22,31 @@ REPORT ZGOOGLE_DEMO_ADD_SHEET.
 APPEND ls_sheet TO  lt_sheets.
 
 
-ZCL_GSPREADSHEET_API=>CREATE_NEW_SPREADSHEET(
-  exporting
-    IP_SPREADSHEET_S =     ls_spreadsheet  " Google sheet object structure
-  importing
-    EP_SPREADSHEET   =     lo_spreadsheet_obj " Google sheet object structure
+zcl_gspreadsheet_api=>create_new_spreadsheet(
+  EXPORTING
+    ip_spreadsheet_s =     ls_spreadsheet  " Google sheet object structure
+  IMPORTING
+    ep_spreadsheet   =     lo_spreadsheet_obj " Google sheet object structure
 ).
 
 
- ls_spreadsheet = LO_SPREADSHEET_OBJ->GET_ABAP_OBJ( ).
- WRITE ls_spreadsheet-SPREADSHEET_URL.
+ls_spreadsheet = lo_spreadsheet_obj->get_abap_obj( ).
+WRITE ls_spreadsheet-spreadsheet_url.
 
 
 *Add a new  sheet
-ls_spreadsheet-PROPERTIES-TITLE = 'NewSpreadsheetTest'.
-ls_sheet-PROPERTIES-title = 'NewSheetToDelete'.
-lo_spreadsheet_obj->ADD_SHEET( IP_PROPERTY =  ls_sheet-PROPERTIES ).
+ls_spreadsheet-properties-title = 'NewSpreadsheetTest'.
+ls_sheet-properties-title = 'NewSheetToDelete'.
+lo_spreadsheet_obj->add_sheet( ip_property =  ls_sheet-properties ).
 
-lt_sheets = lo_spreadsheet_obj->GET_SHEETS_LIST(
+lt_sheets = lo_spreadsheet_obj->get_sheets_list(
 *    PA_SPREADSHEET_ID =
 ).
 CLEAR ls_sheet.
-LOOP AT lt_sheets INTO LS_SHEET.
-IF LS_SHEET-PROPERTIES-TITLE EQ 'NewSheetToDelete'.
-  lo_spreadsheet_obj->DELETE_SHEET( IP_SHEET_ID =  LS_SHEET-PROPERTIES-SHEET_ID ).
-ENDIF.
+LOOP AT lt_sheets INTO ls_sheet.
+  IF ls_sheet-properties-title EQ 'NewSheetToDelete'.
+    lo_spreadsheet_obj->delete_sheet( ip_sheet_id =  ls_sheet-properties-sheet_id ).
+  ENDIF.
 ENDLOOP.
 
 

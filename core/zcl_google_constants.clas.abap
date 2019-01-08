@@ -1,13 +1,13 @@
-class ZCL_GOOGLE_CONSTANTS definition
-  public
-  final
-  create public .
+CLASS zcl_google_constants DEFINITION
+  PUBLIC
+  FINAL
+  CREATE PUBLIC .
 
-public section.
+  PUBLIC SECTION.
 
-  constants GOOGLE_PROFILE type OA2C_PROFILE value 'Z_GOOGLE_CL_PROFILE' ##NO_TEXT.
-protected section.
-private section.
+    CONSTANTS google_profile TYPE oa2c_profile VALUE 'Z_GOOGLE_CL_PROFILE' ##NO_TEXT.
+  PROTECTED SECTION.
+  PRIVATE SECTION.
 ENDCLASS.
 
 

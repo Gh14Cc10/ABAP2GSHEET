@@ -3,7 +3,7 @@
 *&---------------------------------------------------------------------*
 *& - Upload an excel to your google drive folder
 *&---------------------------------------------------------------------*
-REPORT ZGOOGLE_DEMO_UPLOAD_EXCEL.
+REPORT zgoogle_demo_upload_excel.
 
 
 
@@ -11,7 +11,7 @@ DATA : filename TYPE string,
        data     TYPE xstring.
 
 DATA  : length   TYPE i.
-Data: lt_binary_data  TYPE STANDARD TABLE OF x255 WITH NON-UNIQUE DEFAULT KEY.
+DATA: lt_binary_data  TYPE STANDARD TABLE OF x255 WITH NON-UNIQUE DEFAULT KEY.
 
 
 
@@ -37,10 +37,10 @@ CALL FUNCTION 'SCMS_BINARY_TO_XSTRING'
 
 ******* Send to google Drive
 
-CALL METHOD ZCL_GDRIVE_FILE_API=>UPLOAD(
+CALL METHOD zcl_gdrive_file_api=>upload(
   EXPORTING
     ip_file_xstring          = data
     ip_filename              = 'ExcelFromSap'
-    IP_DESTINATION_MIME_TYPE = 'application/vnd.google-apps.spreadsheet'
-    IP_ORIGINAL_MIME_TYPE    = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    ip_destination_mime_type = 'application/vnd.google-apps.spreadsheet'
+    ip_original_mime_type    = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                                ).

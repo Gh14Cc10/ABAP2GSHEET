@@ -6,7 +6,7 @@
 *& - Write the rows read into the spreadsheet created
 *& - Update che cell format with a specific background color
 *&---------------------------------------------------------------------*
-REPORT ZGOOGLE_DEMO_ACDOCA_UPLOAD.
+REPORT zgoogle_demo_acdoca_upload.
 *DATA:
 *  LT_ACDOCA      TYPE TABLE OF ACDOCA,
 *  LS_ACDOCA_LINE LIKE LINE OF lt_ACDOCA.
