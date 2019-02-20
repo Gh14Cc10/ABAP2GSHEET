@@ -1,19 +1,19 @@
-CLASS zcl_gdrive_permission_api DEFINITION
-  PUBLIC
-  INHERITING FROM zcl_google_http_api
-  FINAL
-  CREATE PUBLIC .
+class ZCL_GDRIVE_PERMISSION_API definition
+  public
+  inheriting from ZCL_GOOGLE_HTTP_API
+  final
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    CONSTANTS gc_endpoint_url TYPE string VALUE 'https://www.googleapis.com/drive/v3/files/fileId/permissions' ##NO_TEXT.
+  constants GC_ENDPOINT_URL type STRING value 'https://www.googleapis.com/drive/v3/files/fileId/permissions' ##NO_TEXT.
 
-    CLASS-METHODS create
-      IMPORTING
-        VALUE(ip_spreadsheet_id) TYPE string
-        VALUE(ip_permission)     TYPE zgdrive_permission_s .
-    CLASS-METHODS delete .
-    CLASS-METHODS get_all .
+  class-methods CREATE
+    importing
+      !IP_SPREADSHEET_ID type STRING
+      value(IP_PERMISSION) type ZGDRIVE_PERMISSION_S .
+  class-methods DELETE .
+  class-methods GET_ALL .
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -77,7 +77,7 @@ CLASS ZCL_GDRIVE_PERMISSION_API IMPLEMENTATION.
 *  importing
 *    PE_RESPONSE_STRING =  LV_RESPONSE
 *).
-  ENDMETHOD.
+  ENDMETHOD.  "#EC CI_VALPAR
 
 
   METHOD delete.

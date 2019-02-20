@@ -1,29 +1,29 @@
-CLASS zcl_gspreadsheet_api DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_GSPREADSHEET_API definition
+  public
+  final
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    CONSTANTS gc_endpoint_url TYPE string VALUE 'https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}' ##NO_TEXT.
-    DATA spreadsheet_id TYPE string .
+  constants GC_ENDPOINT_URL type STRING value 'https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}' ##NO_TEXT.
+  data SPREADSHEET_ID type STRING .
 
-    CLASS-METHODS batch_update
-      IMPORTING
-        VALUE(ip_spreadsheet_id) TYPE string
-        VALUE(ip_batch_reqs)     TYPE zgsheet_batch_update_reqs_s .
-    CLASS-METHODS create_new_spreadsheet
-      IMPORTING
-        VALUE(ip_spreadsheet_s) TYPE zgspreadsheet_s OPTIONAL
-      EXPORTING
-        !ep_spreadsheet         TYPE REF TO zcl_gspreadsheet .
-    CLASS-METHODS get_spreadsheet
-      IMPORTING
-        VALUE(pa_spreadsheet_id) TYPE string
-        !it_range_table          TYPE zgsheet_string_tt OPTIONAL
-      RETURNING
-        VALUE(pa_spreadsheet)    TYPE zgspreadsheet_s .
-    CLASS-METHODS get_spreadsheet_filter .
+  class-methods BATCH_UPDATE
+    importing
+      !IP_SPREADSHEET_ID type STRING
+      value(IP_BATCH_REQS) type ZGSHEET_BATCH_UPDATE_REQS_S .
+  class-methods CREATE_NEW_SPREADSHEET
+    importing
+      value(IP_SPREADSHEET_S) type ZGSPREADSHEET_S optional
+    exporting
+      !EP_SPREADSHEET type ref to ZCL_GSPREADSHEET .
+  class-methods GET_SPREADSHEET
+    importing
+      !PA_SPREADSHEET_ID type STRING
+      !IT_RANGE_TABLE type ZGSHEET_STRING_TT optional
+    returning
+      value(PA_SPREADSHEET) type ZGSPREADSHEET_S .
+  class-methods GET_SPREADSHEET_FILTER .
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -40,7 +40,7 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
     DATA: lv_target       TYPE string VALUE gc_endpoint_url,
           lv_response_str TYPE string,
           lv_req_json     TYPE string.
-*    CREATE OBJECT lv_GHTTP TYPE ZCL_GOOGLE_HTTP_API.
+
 
 
 
@@ -54,7 +54,7 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
     IMPORTING
    ep_json      =  lv_req_json
     CHANGING
-    cp_abap_data = ip_batch_reqs
+    cp_abap_data = ip_batch_reqs "#EC CI_VALPAR
     ).
 
 
@@ -66,7 +66,7 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
 *     PT_PARAM           =     " HTTP Framework (iHTTP) Table Name/Value Pairs
         ip_json_request    = lv_req_json
       IMPORTING
-        ep_response_string =  lv_response_str
+        ep_response_string =  lv_response_str "#EC CI_VALPAR
     ).
 
 
@@ -74,7 +74,7 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
 
 
 
-  ENDMETHOD.
+  ENDMETHOD. "#EC CI_VALPAR
 
 
   METHOD create_new_spreadsheet.
@@ -95,10 +95,12 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
 
 
     zcl_google_http_api=>decode_abap2json(
+
       IMPORTING
         ep_json      = lv_json_req
-      CHANGING
+      changing
         cp_abap_data = ip_spreadsheet_s
+
     ).
 
 *    lv_json_req = '{"role":"writer","type":"user","emailAddress":"micael.teweldemedhin@techedgegroup.com"}'.
@@ -116,7 +118,7 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
 
     lv_spreadsheet_obj->set_json( p_gsheet_json =    lv_response_str   ).
 *    ME->SET_ABAP_OBJ(P_GSHEET_ABAP =    LS_SPREADSHEET  )
-    ep_spreadsheet =  lv_spreadsheet_obj.
+    ep_spreadsheet =  lv_spreadsheet_obj. "#EC CI_VALPAR
 
 
   ENDMETHOD.

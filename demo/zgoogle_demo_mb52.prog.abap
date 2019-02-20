@@ -66,7 +66,7 @@ cl_salv_bs_runtime_info=>set(
 
 
 * Submit Report
-SUBMIT rm07mlbs
+SUBMIT rm07mlbs  "#EC CI_SUBMIT
   USING SELECTION-SET p_vari
   AND RETURN.
 
@@ -80,8 +80,8 @@ TRY.
     ASSIGN lr_alv_data->* TO <ft_alv_data>.
 
   CATCH cx_salv_bs_sc_runtime_info.
-    MESSAGE `Unable to retrieve ALV data` TYPE 'E'.
-ENDTRY.
+    MESSAGE `Unable to retrieve ALV data` TYPE 'E'. ##NO_TEXT
+ENDTRY.  ##NO_TEXT
 cl_salv_bs_runtime_info=>clear_all( ).
 
 
@@ -118,29 +118,28 @@ ls_spreadsheet = lv_spreadsheet_obj->get_abap_obj( ).
 
 * Writing header
 
-APPEND 'Material ID' TO lt_value.
-APPEND 'Plant ID' TO lt_value.
-APPEND 'Storage location ID' TO lt_value.
-APPEND 'Base Unit of Measure' TO lt_value.
-APPEND 'Unrestricted Stock' TO lt_value.
-APPEND 'Currency' TO lt_value.
-APPEND 'Unrestricted Value' TO lt_value.
-APPEND 'Transit Stock' TO lt_value.
-APPEND 'Transit Value' TO lt_value.
-APPEND 'Quality Inspection Stock' TO lt_value.
-APPEND 'Quality Inspection Value' TO lt_value.
-APPEND 'Restricted Stock' TO lt_value.
-APPEND 'Restricted Value' TO lt_value.
-APPEND 'Blocked Stock' TO lt_value.
-APPEND 'Blocked Value' TO lt_value.
-APPEND 'Returns Stock' TO lt_value.
-APPEND 'Returns Value' TO lt_value.
-APPEND 'Material' TO lt_value.
-APPEND 'Plant' TO lt_value.
-APPEND 'Material type' TO lt_value.
-APPEND 'Material Group' TO lt_value.
-APPEND 'Storage Location' TO lt_value.
-APPEND  lt_value TO lt_values.
+APPEND text-007 TO lt_value.
+APPEND text-008 TO lt_value.
+APPEND text-009 TO lt_value.
+APPEND text-010 TO lt_value.
+APPEND text-011 TO lt_value.
+APPEND text-012 TO lt_value.
+APPEND text-013 TO lt_value.
+APPEND text-014 TO lt_value.
+APPEND text-015 TO lt_value.
+APPEND text-016 TO lt_value.
+APPEND text-017 TO lt_value.
+APPEND text-018 TO lt_value.
+APPEND text-019 TO lt_value.
+APPEND text-020 TO lt_value.
+APPEND text-021 TO lt_value.
+APPEND text-022 TO lt_value.
+APPEND text-023 TO lt_value.
+APPEND text-024 TO lt_value.
+APPEND text-025 TO lt_value.
+APPEND text-026 TO lt_value.
+APPEND text-027 TO lt_value.
+APPEND text-028 TO lt_value.
 DESCRIBE TABLE lt_value LINES lv_column_n.
 CLEAR lt_value.
 
@@ -181,32 +180,28 @@ CLEAR ls_request_batch.
 *First cell where to start the table
 lv_value_range-range = 'A1'.
 
-APPEND 'MATNR' TO lt_keyfields.
-APPEND 'WERKS' TO lt_keyfields.
-APPEND 'LGORT' TO lt_keyfields.
-
-APPEND 'MEINS' TO lt_keyfields.
-APPEND 'LABST' TO lt_keyfields.
-APPEND 'WAERS' TO lt_keyfields.
-
-APPEND 'WLABS' TO lt_keyfields.
-APPEND 'UMLME' TO lt_keyfields.
-APPEND 'WUMLM' TO lt_keyfields.
-
-APPEND 'INSME' TO lt_keyfields.
-APPEND 'WINSM' TO lt_keyfields.
-APPEND 'EINME' TO lt_keyfields.
-
-APPEND 'WEINM' TO lt_keyfields.
-APPEND 'SPEME' TO lt_keyfields.
-APPEND 'WSPEM' TO lt_keyfields.
-APPEND 'RETME' TO lt_keyfields.
-APPEND 'WRETM' TO lt_keyfields.
-APPEND 'MAKTX' TO lt_keyfields.
-APPEND 'NAME1' TO lt_keyfields.
-APPEND 'MTART' TO lt_keyfields.
-APPEND 'MATKL' TO lt_keyfields.
-APPEND 'LGOBE' TO lt_keyfields.
+APPEND text-029 TO lt_keyfields.
+APPEND text-030 TO lt_keyfields.
+APPEND text-031 TO lt_keyfields.
+APPEND text-032 TO lt_keyfields.
+APPEND text-033 TO lt_keyfields.
+APPEND text-034 TO lt_keyfields.
+APPEND text-035 TO lt_keyfields.
+APPEND text-036 TO lt_keyfields.
+APPEND text-037 TO lt_keyfields.
+APPEND text-038 TO lt_keyfields.
+APPEND text-039 TO lt_keyfields.
+APPEND text-040 TO lt_keyfields.
+APPEND text-041 TO lt_keyfields.
+APPEND text-042 TO lt_keyfields.
+APPEND text-043 TO lt_keyfields.
+APPEND text-044 TO lt_keyfields.
+APPEND text-045 TO lt_keyfields.
+APPEND text-046 TO lt_keyfields.
+APPEND text-047 TO lt_keyfields.
+APPEND text-048 TO lt_keyfields.
+APPEND text-049 TO lt_keyfields.
+APPEND text-050 TO lt_keyfields.
 
 
 

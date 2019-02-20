@@ -8,7 +8,7 @@ REPORT zgoogle_demo_copy_template.
 DATA: ls_file_s           TYPE zgdrive_file_s,
       lv_spreadsheet_json TYPE string,
       ls_spreadsheet_s    TYPE zgspreadsheet_s,
-      lv_html_link        TYPE string VALUE '<a href=https://docs.google.com/spreadsheets/d/$1> https://docs.google.com/spreadsheets/d/$1 </a>'.
+      lv_html_link        TYPE string VALUE '<a href=https://docs.google.com/spreadsheets/d/$1> https://docs.google.com/spreadsheets/d/$1 </a>'. ##NO_TEXT
 
 * Our template link:  https://docs.google.com/spreadsheets/d/1T8ApYlNVZdW7LlXLdeBIFqwn5Rf4fB0hfi63TU15jak/edit#gid=2048178854
 * force to create a google sheeet
@@ -26,9 +26,9 @@ REPLACE ALL OCCURRENCES OF REGEX '/.*' IN p_url WITH ''.
 
 ls_spreadsheet_s-spreadsheet_id = p_url.
 
-ls_file_s-mime_type ='application/vnd.google-apps.spreadsheet'.
-ls_file_s-name = 'sheet from teestt'.
-ls_file_s-description  = 'TestDescription'.
+ls_file_s-mime_type ='application/vnd.google-apps.spreadsheet'. ##NO_TEXT
+ls_file_s-name = 'sheet from teestt'. ##NO_TEXT
+ls_file_s-description  = 'TestDescription'. ##NO_TEXT
 
 
 

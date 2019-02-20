@@ -22,7 +22,7 @@ DATA: lo_spreadsheet_obj TYPE REF TO zcl_gspreadsheet,
       ls_spreadsheet     TYPE zgspreadsheet_s.
 
 *Local spreadsheet
-ls_spreadsheet-properties-title = 'Material master filtered'.
+ls_spreadsheet-properties-title = 'Material master filtered'. ##NO_TEXT
 
 *Creaton on google drive
 zcl_gspreadsheet_api=>create_new_spreadsheet(
@@ -38,7 +38,7 @@ ls_spreadsheet = lo_spreadsheet_obj->get_abap_obj( ).
 
 CREATE OBJECT lo_request_obj TYPE zcl_gsheet_batch_value_req.
 
-APPEND 'Hello World' TO ls_value.
+APPEND 'Hello World' TO ls_value. ##NO_TEXT
 APPEND   ls_value TO  lt_values.
 
 *range

@@ -1,48 +1,48 @@
-CLASS zcl_gspreadsheet_values_api DEFINITION
-  PUBLIC
-  INHERITING FROM zcl_google_http_api
-  FINAL
-  CREATE PUBLIC .
+class ZCL_GSPREADSHEET_VALUES_API definition
+  public
+  inheriting from ZCL_GOOGLE_HTTP_API
+  final
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    CONSTANTS gc_endpoint_url TYPE string VALUE 'https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values' ##NO_TEXT.
+  constants GC_ENDPOINT_URL type STRING value 'https://sheets.googleapis.com/v4/spreadsheets/{spreadsheetId}/values' ##NO_TEXT.
 
-    CLASS-METHODS append
-      IMPORTING
-        VALUE(ip_spreadsheet_id) TYPE string
-        VALUE(ip_range)          TYPE string
-        VALUE(ip_value_range)    TYPE zgsheet_value_ranges_s
-      EXPORTING
-        VALUE(ep_value_updated)  TYPE string .
-    CLASS-METHODS get
-      IMPORTING
-        VALUE(ip_spreadsheet_id) TYPE string
-        VALUE(ip_range)          TYPE string
-      RETURNING
-        VALUE(ep_value_range)    TYPE zgsheet_value_ranges_s .
-    CLASS-METHODS batch_update
-      IMPORTING
-        VALUE(ip_spreadsheet_id) TYPE string
-        VALUE(ip_sheet_id)       TYPE string
-        VALUE(ip_batch_req)      TYPE zgsheet_batch_update_val_req_s .
-    CLASS-METHODS batch_get
-      IMPORTING
-        VALUE(pa_spreadsheet_id) TYPE string
-        VALUE(pa_range)          TYPE string
-      RETURNING
-        VALUE(pa_value_range)    TYPE zgsheet_batch_value_get_resp_s .
-    CLASS-METHODS batch_clear
-      IMPORTING
-        VALUE(pa_spreadsheet_id) TYPE string
-        VALUE(pa_range)          TYPE zgsheet_batch_val_clear_req_s
-      RETURNING
-        VALUE(pa_value_range)    TYPE zgsheet_batch_val_clear_resp_s .
-    CLASS-METHODS batch_append
-      IMPORTING
-        VALUE(ip_value_range)    TYPE zgsheet_value_ranges_s
-        VALUE(ip_spreadsheet_id) TYPE string
-        VALUE(ip_range_string)   TYPE string .
+  class-methods APPEND
+    importing
+      !IP_SPREADSHEET_ID type STRING
+      !IP_RANGE type STRING
+      value(IP_VALUE_RANGE) type ZGSHEET_VALUE_RANGES_S
+    exporting
+      !EP_VALUE_UPDATED type STRING .
+  class-methods GET
+    importing
+      !IP_SPREADSHEET_ID type STRING
+      !IP_RANGE type STRING
+    returning
+      value(EP_VALUE_RANGE) type ZGSHEET_VALUE_RANGES_S .
+  class-methods BATCH_UPDATE
+    importing
+      !IP_SPREADSHEET_ID type STRING
+      !IP_SHEET_ID type STRING
+      value(IP_BATCH_REQ) type ZGSHEET_BATCH_UPDATE_VAL_REQ_S .
+  class-methods BATCH_GET
+    importing
+      !PA_SPREADSHEET_ID type STRING
+      !PA_RANGE type STRING
+    returning
+      value(PA_VALUE_RANGE) type ZGSHEET_BATCH_VALUE_GET_RESP_S .
+  class-methods BATCH_CLEAR
+    importing
+      !PA_SPREADSHEET_ID type STRING
+      value(PA_RANGE) type ZGSHEET_BATCH_VAL_CLEAR_REQ_S
+    returning
+      value(PA_VALUE_RANGE) type ZGSHEET_BATCH_VAL_CLEAR_RESP_S .
+  class-methods BATCH_APPEND
+    importing
+      value(IP_VALUE_RANGE) type ZGSHEET_VALUE_RANGES_S
+      !IP_SPREADSHEET_ID type STRING
+      !IP_RANGE_STRING type STRING .
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -108,7 +108,7 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
 
 
 
-  ENDMETHOD.
+  ENDMETHOD.  "#EC CI_VALPAR
 
 
   METHOD batch_append.
@@ -156,7 +156,7 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
       CHANGING
         cp_abap_data =  ip_value_range
     ).
-  ENDMETHOD.
+  ENDMETHOD.  "#EC CI_VALPAR
 
 
   METHOD batch_clear.
@@ -202,7 +202,7 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
       CHANGING
         cp_abap_data =  pa_value_range
     ).
-  ENDMETHOD.
+  ENDMETHOD.  "#EC CI_VALPAR
 
 
   METHOD batch_get.
@@ -212,9 +212,6 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
       ls_param           TYPE ihttpnvp,
       lv_get_response    TYPE REF TO if_http_response,
       lv_target          TYPE string VALUE  gc_endpoint_url,
-*'https://sheets.googleapis.com/v4/spreadsheets/$1/values/$2',
-*    lv_target type string value 'https://sheets.googleapis.com/v4/spreadsheets/19rDV0SsDV0M600Y_znwHChsMxTkiKm7kaJeTNddaUFk/values/A1',
-
       lv_response_string TYPE string.
 
     ls_param-name = 'ranges'.
@@ -260,7 +257,6 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
     DATA: lv_target       TYPE string VALUE gc_endpoint_url,
           lv_response_str TYPE string,
           lv_req_json     TYPE string.
-*    CREATE OBJECT lv_GHTTP TYPE ZCL_GOOGLE_HTTP_API.
 
 
     REPLACE '{spreadsheetId}' WITH ip_spreadsheet_id  INTO lv_target.
@@ -280,7 +276,7 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
       EXPORTING
         ip_target          = lv_target
         ip_param_kind      = 'H'
-*     PT_PARAM           =     " HTTP Framework (iHTTP) Table Name/Value Pairs
+
         ip_json_request    = lv_req_json
       IMPORTING
         ep_response_string =  lv_response_str
@@ -291,7 +287,7 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
 
 
 
-  ENDMETHOD.
+  ENDMETHOD.  "#EC CI_VALPAR
 
 
   METHOD get.
@@ -302,17 +298,7 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
       ls_param           TYPE ihttpnvp,
       lv_get_response    TYPE REF TO if_http_response,
       lv_target          TYPE string VALUE  gc_endpoint_url,
-*'https://sheets.googleapis.com/v4/spreadsheets/$1/values/$2',
-* lv_target type string value 'https://sheets.googleapis.com/v4/spreadsheets/19rDV0SsDV0M600Y_znwHChsMxTkiKm7kaJeTNddaUFk/values/A1',
-
       lv_response_string TYPE string.
-
-*ls_param-name = 'ranges'.
-*ls_param-value = PA_RANGE.
-*APPEND ls_param TO lt_param.
-*CLEAR ls_param.
-
-
 
     REPLACE '{spreadsheetId}' WITH ip_spreadsheet_id INTO lv_target.
     CONCATENATE lv_target '/' ip_range   INTO lv_target.

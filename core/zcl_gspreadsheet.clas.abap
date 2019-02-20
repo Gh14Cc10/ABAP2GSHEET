@@ -1,45 +1,45 @@
-CLASS zcl_gspreadsheet DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_GSPREADSHEET definition
+  public
+  final
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    METHODS set_title
-      IMPORTING
-        VALUE(ip_title) TYPE string .
-    METHODS create_from_template
-      IMPORTING
-        VALUE(pa_source_spreadsheet_id) TYPE string
-        VALUE(pa_source_sheet_id)       TYPE zgsheet_sheet_id OPTIONAL
-        VALUE(pa_source_sheet_name)     TYPE string OPTIONAL .
-    METHODS update_abap
-      EXPORTING
-        VALUE(pa_spreadsheet) TYPE zgspreadsheet_s .
-    METHODS get_json
-      RETURNING
-        VALUE(p_gsheet_json) TYPE string .
-    METHODS set_json
-      IMPORTING
-        VALUE(p_gsheet_json) TYPE string .
-    METHODS repeat_cell
-      IMPORTING
-        !ip_sheet_id       TYPE string
-        !ip_spreadsheet_id TYPE string .
-    METHODS add_sheet
-      IMPORTING
-        VALUE(ip_property) TYPE zgsheet_property_s .
-    METHODS delete_sheet
-      IMPORTING
-        VALUE(ip_sheet_id) TYPE string .
-    METHODS get_sheets_list
-      IMPORTING
-        VALUE(pa_spreadsheet_id) TYPE string OPTIONAL
-      RETURNING
-        VALUE(pa_sheets_list)    TYPE zgsheet_tt .
-    METHODS get_abap_obj
-      RETURNING
-        VALUE(pa_spreadsheet_obj) TYPE zgspreadsheet_s .
+  methods SET_TITLE
+    importing
+      !IP_TITLE type STRING .
+  methods CREATE_FROM_TEMPLATE
+    importing
+      !PA_SOURCE_SPREADSHEET_ID type STRING
+      !PA_SOURCE_SHEET_ID type ZGSHEET_SHEET_ID optional
+      !PA_SOURCE_SHEET_NAME type STRING optional .
+  methods UPDATE_ABAP
+    exporting
+      !PA_SPREADSHEET type ZGSPREADSHEET_S .
+  methods GET_JSON
+    returning
+      value(P_GSHEET_JSON) type STRING .
+  methods SET_JSON
+    importing
+      !P_GSHEET_JSON type STRING .
+  methods REPEAT_CELL
+    importing
+      !IP_SHEET_ID type STRING
+      !IP_SPREADSHEET_ID type STRING .
+  methods ADD_SHEET
+    importing
+      !IP_PROPERTY type ZGSHEET_PROPERTY_S .
+  methods DELETE_SHEET
+    importing
+      !IP_SHEET_ID type STRING .
+  methods GET_SHEETS_LIST
+    importing
+      !PA_SPREADSHEET_ID type STRING optional
+    returning
+      value(PA_SHEETS_LIST) type ZGSHEET_TT .
+  methods GET_ABAP_OBJ
+    returning
+      value(PA_SPREADSHEET_OBJ) type ZGSPREADSHEET_S .
   PROTECTED SECTION.
   PRIVATE SECTION.
 
@@ -144,22 +144,18 @@ CLASS ZCL_GSPREADSHEET IMPLEMENTATION.
   METHOD create_from_template.
 
     DATA: lv_request          TYPE zgsheet_copy_req_s,
-*          LV_GSPREADSHEETS_API TYPE REF TO ZCL_GSPREADSHEET_API,
-*          LV_GSHEETS_API      TYPE REF TO  ZCL_GSPREADSHEET_SHEETS_API,
+
           lt_src_sheets_list  TYPE zgsheet_tt,
           ls_src_sheet        TYPE zgsheet_s,
           ls_gspreadsheet     TYPE zgspreadsheet_s,
           lv_gspreadsheet_obj TYPE REF TO  zcl_gspreadsheet.
 
-*    CREATE OBJECT:
-*          LS_GSPREADSHEET TYPE ZCL_GSPREADSHEET_API,
-*          LV_GSHEETS_API TYPE ZCL_GSPREADSHEET_SHEETS_API.
+
 
 ***Create new empty spreadsheet***
 
     zcl_gspreadsheet_api=>create_new_spreadsheet(
-*      exporting
-*        IP_SPREADSHEET_S =     " Google spreadsheet  structure to create
+
       IMPORTING
         ep_spreadsheet   =     lv_gspreadsheet_obj " Google spreadsheet class instance
     ).

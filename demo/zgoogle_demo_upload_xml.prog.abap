@@ -9,7 +9,7 @@ REPORT zgoogle_demo_upload_xml.
 *&---------------------------------------------------------------------*
 
 
-TABLES : vbak, vbap, kna1.
+TABLES : vbak, kna1,vbap.
 
 DATA : BEGIN OF i_orders OCCURS 100,
          order_num     TYPE string,
@@ -24,10 +24,12 @@ DATA : BEGIN OF i_items  OCCURS 100,
          quantity  TYPE string,
          amount    TYPE string.
 DATA : END OF i_items.
+*DATA WA_ITEM type REF TO i_items.
 
 *select-options: l_date for sy-datum DEFAULT sy-datum.
 *select-options: l_order for vbak-vbeln.
 *PARAMETERS : fname type LOCALFILE DEFAULT 'c:\'.
+DATA  it_vbap TYPE STANDARD TABLE OF  vbap.
 
 PERFORM select_orders.
 PERFORM make_xml.
@@ -38,34 +40,38 @@ PERFORM make_xml.
 *       text
 *----------------------------------------------------------------------*
 FORM select_orders.
-  SELECT * FROM vbak  UP TO 20 ROWS.
-*  select * from vbak where vbeln in l_order and
-*                           erdat in l_date.
-    WRITE :/ ' Order '.
+  SELECT * FROM vbak  UP TO 20 ROWS.                    "#EC CI_ALL_FIELDS_NEEDED  "#EC CI_NOWHERE
+    WRITE :/ TEXT-012.
     WRITE :/ '-------------------------'.
-    SELECT SINGLE * FROM kna1 WHERE kunnr = vbak-kunnr.
+    SELECT SINGLE * FROM kna1 WHERE kunnr = vbak-kunnr. "#EC CI_ALL_FIELDS_NEEDED
     i_orders-order_num = vbak-vbeln.
     i_orders-date = vbak-erdat.
     i_orders-customer_code = vbak-kunnr.
     i_orders-customer_name = kna1-name1.
     APPEND i_orders.
-    WRITE :/ 'Order Number : ', vbak-vbeln.
-    WRITE :/ 'Order Date   : ', vbak-erdat.
-    WRITE :/ 'Customer Code: ', vbak-kunnr.
-    WRITE :/ 'Customer Name: ', kna1-name1.
+    WRITE :/ TEXT-013, vbak-vbeln.
+    WRITE :/ TEXT-014, vbak-erdat.
+    WRITE :/ TEXT-015, vbak-kunnr.
+    WRITE :/ TEXT-016, kna1-name1.
     SKIP 1.
-    WRITE :/ 'Items  '.
+    WRITE :/ TEXT-017.
     WRITE :/ '------------------------------------------'.
-    SELECT * FROM vbap WHERE vbeln = vbak-vbeln.
+
+
+
+
+    SELECT   *    FROM vbap   WHERE vbeln = vbak-vbeln. "#EC CI_ALL_FIELDS_NEEDED
       i_items-order_num = vbap-vbeln.
       i_items-matnr = vbap-matnr.
       i_items-quantity = vbap-kwmeng.
       i_items-amount = vbap-netpr.
       APPEND i_items.
-      WRITE:/ vbap-matnr,
-              vbap-kwmeng,
-              vbap-netpr.
+      WRITE :/ vbap-matnr.
+      WRITE:
+              vbap-kwmeng UNIT 'PC',
+              vbap-netpr CURRENCY 'EUR' .
     ENDSELECT.
+
     SKIP 1.
   ENDSELECT.
 
@@ -92,40 +98,40 @@ FORM make_xml.
   lo_document = lo_ixml->create_document( ).
 
   orders  = lo_document->create_simple_element(
-                                      name    = 'Orders'
+                                      name    = 'Orders' ##NO_TEXT
                                       parent  = lo_document ).
   LOOP AT i_orders.
     order = lo_document->create_simple_element(
-                                        name    = 'Order'
+                                        name    = 'Order' ##NO_TEXT
                                         parent  = orders ).
 
-    lo_document->create_simple_element( name    = 'order_num'
+    lo_document->create_simple_element( name    = 'order_num' ##NO_TEXT
                                         parent  = order
                                         value   = i_orders-order_num ).
-    lo_document->create_simple_element( name    = 'date'
+    lo_document->create_simple_element( name    = 'date' ##NO_TEXT
                                         parent  = order
                                         value   = i_orders-date ).
-    lo_document->create_simple_element( name    = 'customer_code'
+    lo_document->create_simple_element( name    = 'customer_code' ##NO_TEXT
                                         parent  = order
                                         value   = i_orders-customer_code ).
-    lo_document->create_simple_element( name    = 'customer_name'
+    lo_document->create_simple_element( name    = 'customer_name' ##NO_TEXT
                                         parent  = order
                                         value   = i_orders-customer_name ).
 
     items = lo_document->create_simple_element(
-                                        name    = 'Items'
+                                        name    = 'Items' ##NO_TEXT
                                         parent  = order ).
     LOOP AT i_items WHERE order_num = i_orders-order_num.
       item = lo_document->create_simple_element(
-                                          name    = 'Item'
+                                          name    = 'Item' ##NO_TEXT
                                           parent  = items ).
       lo_document->create_simple_element( name    = 'matnr'
                                           parent  = item
                                           value = i_items-matnr ).
-      lo_document->create_simple_element( name    = 'quantity'
+      lo_document->create_simple_element( name    = 'quantity' ##NO_TEXT
                                           parent  = item
                                           value   = i_items-quantity ).
-      lo_document->create_simple_element( name    = 'amount'
+      lo_document->create_simple_element( name    = 'amount' ##NO_TEXT
                                           parent  = item
                                           value = i_items-amount ).
     ENDLOOP.
@@ -158,8 +164,8 @@ FORM make_xml.
   CALL METHOD zcl_gdrive_file_api=>upload(
     EXPORTING
       ip_file_xstring       = ld_r_xml
-      ip_filename           = 'AbapGeneratedXml'
+      ip_filename           = 'AbapGeneratedXml2'
       ip_original_mime_type = 'application/xml'
-                              ).
+  ).
 
 ENDFORM.

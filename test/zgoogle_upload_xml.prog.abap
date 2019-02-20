@@ -37,7 +37,7 @@ perform make_xml.
 *       text
 *----------------------------------------------------------------------*
 form select_orders.
-  select * from vbak  up to 20 ROWS.
+  select * from vbak  up to 20 ROWS WHERE VBELN < 100.
 *  select * from vbak where vbeln in l_order and
 *                           erdat in l_date.
     write :/ ' Order '.

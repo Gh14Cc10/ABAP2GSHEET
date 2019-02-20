@@ -1,19 +1,20 @@
-CLASS zcl_gsheet_batch_req DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZCL_GSHEET_BATCH_REQ definition
+  public
+  final
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    DATA gv_batch_request TYPE zgsheet_batch_update_reqs_s .
+  data GV_BATCH_REQUEST type ZGSHEET_BATCH_UPDATE_REQS_S .
 
-    METHODS send_request
-      IMPORTING
-        VALUE(ip_spreadsheet_id) TYPE string .
-    METHODS add_request
-      IMPORTING
-        VALUE(ip_batch_req)           TYPE zgsheet_batch_update_req_s OPTIONAL
-        VALUE(ip_batch_upd_value_req) TYPE zgsheet_batch_update_val_req_s OPTIONAL .
+  methods CONSTRUCTOR .
+  methods SEND_REQUEST
+    importing
+      !IP_SPREADSHEET_ID type STRING .
+  methods ADD_REQUEST
+    importing
+      !IP_BATCH_REQ type ZGSHEET_BATCH_UPDATE_REQ_S optional
+      !IP_BATCH_UPD_VALUE_REQ type ZGSHEET_BATCH_UPDATE_VAL_REQ_S optional .
   PROTECTED SECTION.
   PRIVATE SECTION.
 
@@ -32,12 +33,16 @@ CLASS ZCL_GSHEET_BATCH_REQ IMPLEMENTATION.
   ENDMETHOD.
 
 
+  method CONSTRUCTOR.
+  endmethod.
+
+
   METHOD send_request.
 
     zcl_gspreadsheet_api=>batch_update(
   EXPORTING
     ip_spreadsheet_id = ip_spreadsheet_id
-*        IP_SHEET_ID       = IP_SHEET_ID
+
     ip_batch_reqs      =    me->gv_batch_request " Request structure for spreadsheet batchupdate
 ).
   ENDMETHOD.

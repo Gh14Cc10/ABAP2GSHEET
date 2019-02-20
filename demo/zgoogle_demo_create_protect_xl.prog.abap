@@ -53,8 +53,8 @@ ls_batch_request-add_protected_range-protected_range-range-start_row_index = '1'
 ls_batch_request-add_protected_range-protected_range-range-end_row_index = '20'.
 ls_batch_request-add_protected_range-protected_range-range-end_column_index = '7'.
 ls_batch_request-add_protected_range-protected_range-range-start_column_index = '6'.
-ls_batch_request-add_protected_range-protected_range-description ='no touch area'.
-ls_batch_request-add_protected_range-protected_range-warning_only = 'false'.
+ls_batch_request-add_protected_range-protected_range-description ='no touch area'. ##NO_TEXT
+ls_batch_request-add_protected_range-protected_range-warning_only = 'false'. ##NO_TEXT
 ls_batch_request-add_protected_range-protected_range-requesting_user_can_edit = 'false'.
 
 DATA lv_user  TYPE string.

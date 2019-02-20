@@ -24,7 +24,7 @@ CALL FUNCTION 'GUI_UPLOAD'
     filelength = length
   TABLES
     data_tab   = lt_binary_data
-  EXCEPTIONS
+  EXCEPTIONS  ##FM_SUBRC_OK
     OTHERS     = 99.
 
 CALL FUNCTION 'SCMS_BINARY_TO_XSTRING'

@@ -1,75 +1,75 @@
-CLASS zcl_google_http_api DEFINITION
-  PUBLIC
-  CREATE PUBLIC .
+class ZCL_GOOGLE_HTTP_API definition
+  public
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    CLASS-DATA gc_spreadsheet_url_prefix TYPE string VALUE 'https://docs.google.com/spreadsheets/d/' ##NO_TEXT.
+  class-data GC_SPREADSHEET_URL_PREFIX type STRING value 'https://docs.google.com/spreadsheets/d/' ##NO_TEXT.
 
-    CLASS-METHODS get_response_string
-      IMPORTING
-        !response              TYPE REF TO if_http_response
-      RETURNING
-        VALUE(p_response_data) TYPE string .
-    CLASS-METHODS extract_spreadsheet_id
-      IMPORTING
-        !ip_url              TYPE string
-      RETURNING
-        VALUE(ep_identifier) TYPE string .
-    CLASS-METHODS send_delete_request
-      IMPORTING
-        !target          TYPE string
-        !method          TYPE string
-        !param_kind      TYPE string
-        !lt_param        TYPE tihttpnvp
-      EXPORTING
-        !response_string TYPE string
-        !response        TYPE REF TO if_http_response .
-    CLASS-METHODS display_response
-      IMPORTING
-        VALUE(response)        TYPE REF TO if_http_response
-      RETURNING
-        VALUE(p_response_data) TYPE string .
-    CLASS-METHODS send_patch_request
-      IMPORTING
-        VALUE(ip_target)          TYPE string
-        VALUE(ip_param_kind)      TYPE string
-        VALUE(tp_param)           TYPE tihttpnvp OPTIONAL
-        VALUE(ip_json_request)    TYPE string
-        VALUE(it_multiparts)      TYPE zgsheet_post_multipart_tt OPTIONAL
-      EXPORTING
-        VALUE(ep_response_string) TYPE string .
-    CLASS-METHODS send_post_request
-      IMPORTING
-        VALUE(ip_target)          TYPE string
-        VALUE(ip_param_kind)      TYPE string
-        VALUE(tp_param)           TYPE tihttpnvp OPTIONAL
-        VALUE(ip_json_request)    TYPE string
-        VALUE(it_multiparts)      TYPE zgsheet_post_multipart_tt OPTIONAL
-      EXPORTING
-        VALUE(ep_response_string) TYPE string .
-    CLASS-METHODS send_get_request
-      IMPORTING
-        VALUE(target)          TYPE string
-        VALUE(method)          TYPE string OPTIONAL
-        VALUE(param_kind)      TYPE string
-        VALUE(lt_param)        TYPE tihttpnvp
-      EXPORTING
-        VALUE(response_string) TYPE string
-        VALUE(response)        TYPE REF TO if_http_response .
-    CLASS-METHODS extract_response
-      EXPORTING
-        VALUE(response) TYPE REF TO if_http_response .
-    CLASS-METHODS encode_json2abap
-      IMPORTING
-        VALUE(ip_json)      TYPE string
-      CHANGING
-        VALUE(cp_abap_data) TYPE any .
-    CLASS-METHODS decode_abap2json
-      EXPORTING
-        VALUE(ep_json)      TYPE string
-      CHANGING
-        VALUE(cp_abap_data) TYPE any .
+  class-methods GET_RESPONSE_STRING
+    importing
+      !RESPONSE type ref to IF_HTTP_RESPONSE
+    returning
+      value(P_RESPONSE_DATA) type STRING .
+  class-methods EXTRACT_SPREADSHEET_ID
+    importing
+      !IP_URL type STRING
+    returning
+      value(EP_IDENTIFIER) type STRING .
+  class-methods SEND_DELETE_REQUEST
+    importing
+      !TARGET type STRING
+      !METHOD type STRING
+      !PARAM_KIND type STRING
+      !LT_PARAM type TIHTTPNVP
+    exporting
+      !RESPONSE_STRING type STRING
+      !RESPONSE type ref to IF_HTTP_RESPONSE .
+  class-methods DISPLAY_RESPONSE
+    importing
+      value(RESPONSE) type ref to IF_HTTP_RESPONSE
+    returning
+      value(P_RESPONSE_DATA) type STRING .
+  class-methods SEND_PATCH_REQUEST
+    importing
+      !IP_TARGET type STRING
+      !IP_PARAM_KIND type STRING
+      !TP_PARAM type TIHTTPNVP optional
+      !IP_JSON_REQUEST type STRING
+      !IT_MULTIPARTS type ZGSHEET_POST_MULTIPART_TT optional
+    exporting
+      !EP_RESPONSE_STRING type STRING .
+  class-methods SEND_POST_REQUEST
+    importing
+      !IP_TARGET type STRING
+      !IP_PARAM_KIND type STRING
+      !TP_PARAM type TIHTTPNVP optional
+      !IP_JSON_REQUEST type STRING
+      !IT_MULTIPARTS type ZGSHEET_POST_MULTIPART_TT optional
+    exporting
+      !EP_RESPONSE_STRING type STRING .
+  class-methods SEND_GET_REQUEST
+    importing
+      !TARGET type STRING
+      !METHOD type STRING optional
+      !PARAM_KIND type STRING
+      !LT_PARAM type TIHTTPNVP
+    exporting
+      !RESPONSE_STRING type STRING
+      value(RESPONSE) type ref to IF_HTTP_RESPONSE .
+  class-methods EXTRACT_RESPONSE
+    exporting
+      value(RESPONSE) type ref to IF_HTTP_RESPONSE .
+  class-methods ENCODE_JSON2ABAP
+    importing
+      !IP_JSON type STRING
+    changing
+      value(CP_ABAP_DATA) type ANY .
+  class-methods DECODE_ABAP2JSON
+    exporting
+      !EP_JSON type STRING
+    changing
+      value(CP_ABAP_DATA) type ANY .
   PROTECTED SECTION.
   PRIVATE SECTION.
 ENDCLASS.
@@ -304,7 +304,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
             ro_oauth2_client = lo_oa2c_client.
 
       CATCH cx_oa2c INTO lx_oa2c.
-        WRITE: `Error calling CREATE.`.
+        WRITE: text-002."`Error calling CREATE.`.
         WRITE: / lx_oa2c->get_text( ).
         RETURN.
     ENDTRY.
@@ -320,7 +320,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
         TRY.
             CALL METHOD lo_oa2c_client->execute_refresh_flow.
           CATCH cx_oa2c INTO lx_oa2c.
-            WRITE: `Error calling EXECUTE_REFRESH_FLOW.`.
+            WRITE: text-003."`Error calling EXECUTE_REFRESH_FLOW.`.
             WRITE: / lx_oa2c->get_text( ).
             RETURN.
         ENDTRY.
@@ -330,7 +330,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
                 io_http_client = lo_http_client
                 i_param_kind   = param_kind.
           CATCH cx_oa2c INTO lx_oa2c.
-            WRITE: `Error calling SET_TOKEN.`.
+            WRITE: text-004."`Error calling SET_TOKEN.`.
             WRITE: / lx_oa2c->get_text( ).
             RETURN.
         ENDTRY.
@@ -467,7 +467,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
             ro_oauth2_client = lo_oa2c_client.
 
       CATCH cx_oa2c INTO lx_oa2c.
-        WRITE: `Error calling CREATE.`.
+        WRITE: text-002."`Error calling CREATE.`.
         WRITE: / lx_oa2c->get_text( ).
         RETURN.
     ENDTRY.
@@ -483,7 +483,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
         TRY.
             CALL METHOD lo_oa2c_client->execute_refresh_flow.
           CATCH cx_oa2c INTO lx_oa2c.
-            WRITE: `Error calling EXECUTE_REFRESH_FLOW.`.
+            WRITE: text-003."`Error calling EXECUTE_REFRESH_FLOW.`.
             WRITE: / lx_oa2c->get_text( ).
             RETURN.
         ENDTRY.
@@ -493,7 +493,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
                 io_http_client = lo_http_client
                 i_param_kind   = param_kind.
           CATCH cx_oa2c INTO lx_oa2c.
-            WRITE: `Error calling SET_TOKEN.`.
+            WRITE: text-004."`Error calling SET_TOKEN.`.
             WRITE: / lx_oa2c->get_text( ).
             RETURN.
         ENDTRY.
@@ -716,7 +716,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
             ro_oauth2_client = lo_oa2c_client.
 
       CATCH cx_oa2c INTO lx_oa2c.
-        WRITE: `Error calling CREATE.`.
+        WRITE: text-002."`Error calling CREATE.`.
         WRITE: / lx_oa2c->get_text( ).
         RETURN.
     ENDTRY.
@@ -732,7 +732,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
         TRY.
             CALL METHOD lo_oa2c_client->execute_refresh_flow.
           CATCH cx_oa2c INTO lx_oa2c.
-            WRITE: `Error calling EXECUTE_REFRESH_FLOW.`.
+            WRITE: text-003."`Error calling EXECUTE_REFRESH_FLOW.`.
             WRITE: / lx_oa2c->get_text( ).
             RETURN.
         ENDTRY.
@@ -742,7 +742,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
                 io_http_client = lo_http_client
                 i_param_kind   = ip_param_kind.
           CATCH cx_oa2c INTO lx_oa2c.
-            WRITE: `Error calling SET_TOKEN.`.
+            WRITE: text-004."`Error calling SET_TOKEN.`.
             WRITE: / lx_oa2c->get_text( ).
             RETURN.
         ENDTRY.
@@ -859,7 +859,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
       MESSAGE ID sy-msgid TYPE sy-msgty NUMBER sy-msgno
                  WITH sy-msgv1 sy-msgv2 sy-msgv3 sy-msgv4.
     ENDIF.
-  ENDMETHOD.
+  ENDMETHOD. "#EC CI_VALPAR
 
 
   METHOD send_post_request.
@@ -1020,7 +1020,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
             ro_oauth2_client = lo_oa2c_client.
 
       CATCH cx_oa2c INTO lx_oa2c.
-        WRITE: `Error calling CREATE.`.
+        WRITE: text-002."`Error calling CREATE.`.
         WRITE: / lx_oa2c->get_text( ).
         RETURN.
     ENDTRY.
@@ -1036,7 +1036,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
         TRY.
             CALL METHOD lo_oa2c_client->execute_refresh_flow.
           CATCH cx_oa2c INTO lx_oa2c.
-            WRITE: `Error calling EXECUTE_REFRESH_FLOW.`.
+            WRITE: text-003."`Error calling EXECUTE_REFRESH_FLOW.`.
             WRITE: / lx_oa2c->get_text( ).
             RETURN.
         ENDTRY.
@@ -1046,7 +1046,7 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
                 io_http_client = lo_http_client
                 i_param_kind   = ip_param_kind.
           CATCH cx_oa2c INTO lx_oa2c.
-            WRITE: `Error calling SET_TOKEN.`.
+            WRITE: text-004."`Error calling SET_TOKEN.`.
             WRITE: / lx_oa2c->get_text( ).
             RETURN.
         ENDTRY.

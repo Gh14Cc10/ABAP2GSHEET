@@ -1,25 +1,25 @@
-CLASS zif_gsheet_request DEFINITION
-  PUBLIC
-  FINAL
-  CREATE PUBLIC .
+class ZIF_GSHEET_REQUEST definition
+  public
+  final
+  create public .
 
-  PUBLIC SECTION.
+public section.
 
-    TYPES ztest_type TYPE zgsheet_batch_upd_resp_s .
+  types ZTEST_TYPE type ZGSHEET_BATCH_UPD_RESP_S .
 
-    DATA gv_single_request TYPE zgsheet_request_s .
+  data GV_SINGLE_REQUEST type ZGSHEET_REQUEST_S .
 
-    METHODS constructor
-      IMPORTING
-        VALUE(p_type) TYPE any .
-    METHODS send_request
-      IMPORTING
-        VALUE(ip_spreadsheet_id) TYPE string
-        VALUE(ip_sheet_id)       TYPE string .
-    METHODS add_request
-      IMPORTING
-        VALUE(ip_batch_req)           LIKE gv_single_request OPTIONAL
-        VALUE(ip_batch_upd_value_req) TYPE zgsheet_batch_update_val_req_s OPTIONAL .
+  methods CONSTRUCTOR
+    importing
+      value(P_TYPE) type ANY .
+  methods SEND_REQUEST
+    importing
+      !IP_SPREADSHEET_ID type STRING
+      !IP_SHEET_ID type STRING .
+  methods ADD_REQUEST
+    importing
+      !IP_BATCH_REQ like GV_SINGLE_REQUEST optional
+      !IP_BATCH_UPD_VALUE_REQ type ZGSHEET_BATCH_UPDATE_VAL_REQ_S optional .
   PROTECTED SECTION.
   PRIVATE SECTION.
 

@@ -30,7 +30,7 @@ TRY.
             r_data = lo_data
     ).
     ASSIGN lo_data->* to <lt_outtab>.
-    BREAK-POINT.
+
 
   CATCH cx_salv_bs_sc_runtime_info.
 ENDTRY.
