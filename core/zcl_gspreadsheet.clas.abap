@@ -96,23 +96,18 @@ CLASS ZCL_GSPREADSHEET IMPLEMENTATION.
 
 
     DATA: ls_request_batch  TYPE zgsheet_batch_update_req_s,
-
-          lv_batch_req_obj  TYPE REF TO zcl_gsheet_batch_req,
-
+          lo_batch_req_obj  TYPE REF TO zcl_gsheet_batch_req,
           lv_spreadsheet_id TYPE string.
+
     lv_spreadsheet_id =  me->gs_abap_spreadsheet-spreadsheet_id.
 
-    CREATE OBJECT lv_batch_req_obj TYPE zcl_gsheet_batch_req.
-
-
+    CREATE OBJECT lo_batch_req_obj TYPE zcl_gsheet_batch_req.
 
     CLEAR ls_request_batch.
     ls_request_batch-add_sheet-properties = ip_property.
 
-
-
-    lv_batch_req_obj->add_request( ip_batch_req = ls_request_batch  ).
-    lv_batch_req_obj->send_request(
+    lo_batch_req_obj->add_request( ip_batch_req = ls_request_batch  ).
+    lo_batch_req_obj->send_request(
       EXPORTING
         ip_spreadsheet_id =  lv_spreadsheet_id
 *      IP_SHEET_ID       = ip_sheet_ID
@@ -144,39 +139,27 @@ CLASS ZCL_GSPREADSHEET IMPLEMENTATION.
   METHOD create_from_template.
 
     DATA: lv_request          TYPE zgsheet_copy_req_s,
-
           lt_src_sheets_list  TYPE zgsheet_tt,
           ls_src_sheet        TYPE zgsheet_s,
           ls_gspreadsheet     TYPE zgspreadsheet_s,
-          lv_gspreadsheet_obj TYPE REF TO  zcl_gspreadsheet.
-
-
+          lo_gspreadsheet_obj TYPE REF TO  zcl_gspreadsheet.
 
 ***Create new empty spreadsheet***
-
     zcl_gspreadsheet_api=>create_new_spreadsheet(
-
       IMPORTING
-        ep_spreadsheet   =     lv_gspreadsheet_obj " Google spreadsheet class instance
+        ep_spreadsheet   =     lo_gspreadsheet_obj " Google spreadsheet class instance
     ).
 
-
-
-
-
-
-
-    me->set_json( p_gsheet_json =  lv_gspreadsheet_obj->get_json( ) ).
-    ls_gspreadsheet  = lv_gspreadsheet_obj->get_abap_obj( ).
-    CLEAR lv_gspreadsheet_obj.
+    me->set_json( p_gsheet_json =  lo_gspreadsheet_obj->get_json( ) ).
+    ls_gspreadsheet  = lo_gspreadsheet_obj->get_abap_obj( ).
+    CLEAR lo_gspreadsheet_obj.
     lt_src_sheets_list  = me->get_sheets_list( pa_spreadsheet_id =   pa_source_spreadsheet_id ).
 
     lv_request-destination_spreadsheet_id = ls_gspreadsheet-spreadsheet_id.
 
-*** Looop all the sheets:
+*** Loop all the sheets:
 
     LOOP AT lt_src_sheets_list INTO  ls_src_sheet.
-
 
       zcl_gspreadsheet_sheets_api=>copy_sheet(
        EXPORTING
@@ -216,22 +199,18 @@ CLASS ZCL_GSPREADSHEET IMPLEMENTATION.
   METHOD delete_sheet.
 
     DATA: ls_request_batch  TYPE zgsheet_batch_update_req_s,
-
-          lv_batch_req_obj  TYPE REF TO zcl_gsheet_batch_req,
-
+          lo_batch_req_obj  TYPE REF TO zcl_gsheet_batch_req,
           lv_spreadsheet_id TYPE string.
+
     lv_spreadsheet_id =  me->gs_abap_spreadsheet-spreadsheet_id.
 
-    CREATE OBJECT lv_batch_req_obj TYPE zcl_gsheet_batch_req.
-
-
+    CREATE OBJECT lo_batch_req_obj TYPE zcl_gsheet_batch_req.
 
     CLEAR ls_request_batch.
     ls_request_batch-delete_sheet-sheet_id = ip_sheet_id.
 
-
-    lv_batch_req_obj->add_request( ip_batch_req = ls_request_batch  ).
-    lv_batch_req_obj->send_request(
+    lo_batch_req_obj->add_request( ip_batch_req = ls_request_batch  ).
+    lo_batch_req_obj->send_request(
       EXPORTING
         ip_spreadsheet_id =  lv_spreadsheet_id
 *        IP_SHEET_ID       = ip_sheet_ID
@@ -254,12 +233,14 @@ CLASS ZCL_GSPREADSHEET IMPLEMENTATION.
   METHOD get_abap_obj.
 
     pa_spreadsheet_obj = me->gs_abap_spreadsheet.
+
   ENDMETHOD.
 
 
   METHOD get_json.
 
     p_gsheet_json = me->gv_json_string.
+
   ENDMETHOD.
 
 
@@ -268,14 +249,9 @@ CLASS ZCL_GSPREADSHEET IMPLEMENTATION.
     DATA: ls_spreadsheet TYPE zgspreadsheet_s,
           lv_sheet       TYPE  zgsheet_s.
 
-
     ls_spreadsheet  = zcl_gspreadsheet_api=>get_spreadsheet(
                       pa_spreadsheet_id = me->gs_abap_spreadsheet-spreadsheet_id
-
                   ).
-*
-*
-*                   GET_SPREADSHEET( PA_SPREADSHEET_ID = PA_SPREADSHEET_ID  ).
 
     LOOP AT  ls_spreadsheet-sheets INTO lv_sheet.
       WRITE lv_sheet-properties-sheet_id.
@@ -309,12 +285,8 @@ CLASS ZCL_GSPREADSHEET IMPLEMENTATION.
   METHOD repeat_cell.
 
     DATA: ls_request_s     TYPE zgsheet_batch_update_reqs_s,
-          lt_list_request  TYPE   zgsheet_batch_update_reqs_tt,
+          lt_list_request  TYPE zgsheet_batch_update_reqs_tt,
           ls_batch_request TYPE zgsheet_batch_update_req_s.
-
-*lv_reqUpdate =
-* '{"requests":[{"repeatCell":{"range":{"sheetId":357392262,"startColumnIndex":1,"endColumnIndex":10,"startRowIndex":0,"endRowIndex":2},"fields":"*",
-* "cell":{"userEnteredValue":{"numberValue":27}}}}],"responseIncludeGridData":true}'.
 
 
     ls_batch_request-repeat_cell-range-sheet_id =  ip_sheet_id.
@@ -348,6 +320,7 @@ CLASS ZCL_GSPREADSHEET IMPLEMENTATION.
   METHOD set_title.
 
     me->gs_abap_spreadsheet-properties-title = ip_title.
+
   ENDMETHOD.
 
 
@@ -363,7 +336,6 @@ CLASS ZCL_GSPREADSHEET IMPLEMENTATION.
 
     /ui2/cl_json=>deserialize( EXPORTING json = me->gv_json_string pretty_name = /ui2/cl_json=>pretty_mode-camel_case CHANGING data = pa_spreadsheet ).
     me->gs_abap_spreadsheet = pa_spreadsheet.
-
 
   ENDMETHOD.
 

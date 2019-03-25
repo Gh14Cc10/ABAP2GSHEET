@@ -40,9 +40,8 @@ CLASS ZCL_GSHEET_BATCH_REQ IMPLEMENTATION.
   METHOD send_request.
 
     zcl_gspreadsheet_api=>batch_update(
-  EXPORTING
+    EXPORTING
     ip_spreadsheet_id = ip_spreadsheet_id
-
     ip_batch_reqs      =    me->gv_batch_request " Request structure for spreadsheet batchupdate
 ).
   ENDMETHOD.

@@ -41,23 +41,15 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
           lv_response_str TYPE string,
           lv_req_json     TYPE string.
 
-
-
-
-
-
     REPLACE '{spreadsheetId}' WITH ip_spreadsheet_id  INTO lv_target.
     CONCATENATE lv_target ':batchUpdate' INTO lv_target.
 
-
     zcl_google_http_api=>decode_abap2json(
     IMPORTING
-   ep_json      =  lv_req_json
+      ep_json      =  lv_req_json
     CHANGING
-    cp_abap_data = ip_batch_reqs "#EC CI_VALPAR
+      cp_abap_data = ip_batch_reqs                         "#EC CI_VALPAR
     ).
-
-
 
     zcl_google_http_api=>send_post_request(
       EXPORTING
@@ -66,15 +58,10 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
 *     PT_PARAM           =     " HTTP Framework (iHTTP) Table Name/Value Pairs
         ip_json_request    = lv_req_json
       IMPORTING
-        ep_response_string =  lv_response_str "#EC CI_VALPAR
+        ep_response_string =  lv_response_str            "#EC CI_VALPAR
     ).
 
-
-
-
-
-
-  ENDMETHOD. "#EC CI_VALPAR
+  ENDMETHOD.                                             "#EC CI_VALPAR
 
 
   METHOD create_new_spreadsheet.
@@ -82,14 +69,14 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
 *output: An instance of spreadsheet created
 *
     DATA:
-      lv_spreadsheet_obj TYPE REF TO  zcl_gspreadsheet,
+      lo_spreadsheet_obj TYPE REF TO  zcl_gspreadsheet,
       lt_param           TYPE tihttpnvp,
       ls_param           TYPE ihttpnvp,
 *          GOBJECT            TYPE REF TO  ZCL_GOOGLE_HTTP_API,
       lv_target          TYPE string VALUE gc_endpoint_url,
       lv_json_req        TYPE string,
       lv_response_str    TYPE string.
-    CREATE OBJECT: lv_spreadsheet_obj TYPE zcl_gspreadsheet.
+    CREATE OBJECT: lo_spreadsheet_obj TYPE zcl_gspreadsheet.
 *
     REPLACE '{spreadsheetId}' WITH '' INTO lv_target.
 
@@ -116,9 +103,9 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
 
 
 
-    lv_spreadsheet_obj->set_json( p_gsheet_json =    lv_response_str   ).
+    lo_spreadsheet_obj->set_json( p_gsheet_json =    lv_response_str   ).
 *    ME->SET_ABAP_OBJ(P_GSHEET_ABAP =    LS_SPREADSHEET  )
-    ep_spreadsheet =  lv_spreadsheet_obj. "#EC CI_VALPAR
+    ep_spreadsheet =  lo_spreadsheet_obj. "#EC CI_VALPAR
 
 
   ENDMETHOD.
@@ -131,14 +118,14 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
 
 
 
-    DATA: gobject            TYPE REF TO zcl_google_http_api,
+    DATA: lo_gobject            TYPE REF TO zcl_google_http_api,
           lt_param           TYPE tihttpnvp,
           ls_param           TYPE ihttpnvp,
-          lv_get_response    TYPE REF TO if_http_response,
+          lo_get_response    TYPE REF TO if_http_response,
           lv_target          TYPE string VALUE 'https://sheets.googleapis.com/v4/spreadsheets/&1',
           ls_range           TYPE string,
           lv_response_string TYPE string.
-    CREATE OBJECT gobject TYPE zcl_google_http_api.
+    CREATE OBJECT lo_gobject TYPE zcl_google_http_api.
 
 **Query parameters
     ls_param-name = 'includeGridData'.
@@ -165,7 +152,7 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
     REPLACE '&1' WITH pa_spreadsheet_id INTO lv_target.
 
 
-    gobject->send_get_request(
+    lo_gobject->send_get_request(
       EXPORTING
 
         target = lv_target
@@ -173,12 +160,8 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
         lt_param   =     lt_param" HTTP Framework (iHTTP) Table Name/Value Pairs
           IMPORTING
        response_string = lv_response_string
-       response = lv_get_response
+       response = lo_get_response
     ).
-
-
-
-
 
 
     zcl_google_http_api=>encode_json2abap(
@@ -187,8 +170,6 @@ CLASS ZCL_GSPREADSHEET_API IMPLEMENTATION.
       CHANGING
         cp_abap_data =  pa_spreadsheet
     ).
-
-
 
 
   ENDMETHOD.

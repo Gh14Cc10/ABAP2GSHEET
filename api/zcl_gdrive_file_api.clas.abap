@@ -42,75 +42,65 @@ ENDCLASS.
 CLASS ZCL_GDRIVE_FILE_API IMPLEMENTATION.
 
 
-  method COPY.
+  METHOD copy.
 
 
-    DATA: lv_file      TYPE ZGDRIVE_FILE_S,
-          lv_sheet     type zgspreadsheet_s,
-          lv_json_file TYPE STRING,
-          lv_target    type string value GC_ENDPOINT_URL.
+    DATA: lv_sheet     TYPE zgspreadsheet_s,
+          lv_json_file TYPE string,
+          lv_target    TYPE string VALUE gc_endpoint_url.
 
-    CONCATENATE lv_target '/' IP_SOURCE_SPREADSHEET_ID INTO lv_target.
+    CONCATENATE lv_target '/' ip_source_spreadsheet_id INTO lv_target.
     CONCATENATE lv_target '/copy' INTO lv_target.
 
-*  lv_file-NAME = 'abap_test'.
-*  lv_file-MIMETYPE  = ''.
-*    lv_file-DESCRIPTION  = 'TestDescription'.
-*lv_sheet-PROPERTIES-TITLE = 'abap_sheet'.
-*  CREATE OBJECT lv_spreadsheet TYPE ZCL_SPREADSHEET.
-
-
-
-    ZCL_GOOGLE_HTTP_API=>DECODE_ABAP2JSON(
-      importing
-       EP_JSON      =  lv_json_file
-      changing
-        CP_ABAP_DATA = ip_file
+    zcl_google_http_api=>decode_abap2json(
+      IMPORTING
+       ep_json      =  lv_json_file
+      CHANGING
+        cp_abap_data = ip_file
     ).
 
-*lv_target = 'http://requestbin.net/r/1mtbo3r1'.
 
-    ZCL_GOOGLE_HTTP_API=>SEND_POST_REQUEST(
-      exporting
-        IP_TARGET          = lv_target
-        IP_PARAM_KIND      =  'H'
+    zcl_google_http_api=>send_post_request(
+      EXPORTING
+        ip_target          = lv_target
+        ip_param_kind      =  'H'
 *        PT_PARAM           =     " HTTP Framework (iHTTP) Table Name/Value Pairs
-        IP_JSON_REQUEST    = lv_json_file
-      importing
-        EP_RESPONSE_STRING = EP_SPREADSHEET_JSON
+        ip_json_request    = lv_json_file
+      IMPORTING
+        ep_response_string = ep_spreadsheet_json
     ).
 
-  endmethod."#EC CI_VALPAR
+  ENDMETHOD.                                             "#EC CI_VALPAR
 
 
-  method DELETE.
-DATA:
-      lt_param           TYPE tihttpnvp,
-      ls_param           TYPE ihttpnvp,
-      lv_target          TYPE string value GC_ENDPOINT_URL.
+  METHOD delete.
+    DATA:
+      lt_param  TYPE tihttpnvp,
+      ls_param  TYPE ihttpnvp,
+      lv_target TYPE string VALUE gc_endpoint_url.
 
-      CONCATENATE lv_target '/' ip_spreadsheet_id INTO lv_target.
+    CONCATENATE lv_target '/' ip_spreadsheet_id INTO lv_target.
 
-   ZCL_GOOGLE_HTTP_API=>SEND_DELETE_REQUEST(
-     exporting
-       TARGET          = lv_target
-       METHOD          = 'DELETE'
-       PARAM_KIND      = 'H'
-       LT_PARAM        =   lt_param      " HTTP Framework (iHTTP) Table Name/Value Pairs
+    zcl_google_http_api=>send_delete_request(
+      EXPORTING
+        target          = lv_target
+        method          = 'DELETE'
+        param_kind      = 'H'
+        lt_param        =   lt_param      " HTTP Framework (iHTTP) Table Name/Value Pairs
 *     importing
 *       RESPONSE_STRING =
 *       RESPONSE        =     " HTTP Framework (iHTTP) HTTP Response
-   ).
-  endmethod.
+    ).
+  ENDMETHOD.
 
 
-  method LIST_FILTER.
-DATA:
+  METHOD list_filter.
+    DATA:
 
       lt_param           TYPE tihttpnvp,
       ls_param           TYPE ihttpnvp,
-      lv_get_response    type ref to IF_HTTP_RESPONSE,
-      lv_target type string VALUE GC_ENDPOINT_URL,
+      lv_get_response    TYPE REF TO if_http_response,
+      lv_target          TYPE string VALUE gc_endpoint_url,
       lv_response_string TYPE string.
 
 
@@ -135,51 +125,40 @@ DATA:
 
 *REPLACE '&1' WITH PA_SPREADSHEET_ID INTO lv_target.
 
+    zcl_google_http_api=>send_get_request(
+      EXPORTING
+
+        target = lv_target
+        param_kind =      'H'
+        lt_param   =     lt_param" HTTP Framework (iHTTP) Table Name/Value Pairs
+          IMPORTING
+       response_string = lv_response_string
+       response = lv_get_response
+    ).
+
+    zcl_google_http_api=>encode_json2abap(
+      EXPORTING
+        ip_json      = lv_response_string
+      CHANGING
+        cp_abap_data =  ep_spreadsheet
+    ).
 
 
-
-ZCL_GOOGLE_HTTP_API=>SEND_GET_REQUEST(
-  exporting
-
-    TARGET = lv_target
-    PARAM_KIND =      'H'
-    LT_PARAM   =     lt_param" HTTP Framework (iHTTP) Table Name/Value Pairs
-      importing
-   response_string = lv_response_string
-   RESPONSE = lv_get_response
-).
+  ENDMETHOD.
 
 
-
-
-
-
-ZCL_GOOGLE_HTTP_API=>ENCODE_JSON2ABAP(
-  exporting
-    IP_JSON      = lv_response_string
-  changing
-    CP_ABAP_DATA =  EP_SPREADSHEET
-).
-
-
-  endmethod.
-
-
-  method UPDATE.
+  METHOD update.
     DATA:
 *      GOBJECT            TYPE REF TO ZCL_GOOGLE_HTTP_API,
       lt_param           TYPE tihttpnvp,
       ls_param           TYPE ihttpnvp,
-      lv_get_response    type ref to IF_HTTP_RESPONSE,
-      lv_target type string VALUE GC_ENDPOINT_URL,
+      lv_get_response    TYPE REF TO if_http_response,
+      lv_target          TYPE string VALUE gc_endpoint_url,
       lv_response_string TYPE string.
 
-
-
-
 *
-CONCATENATE  lv_target '/' IP_FILE_ID   INTO lv_target.
-CONCATENATE  lv_target '?addParents=' IP_FOLDER_ID  INTO lv_target.
+    CONCATENATE  lv_target '/' ip_file_id   INTO lv_target.
+    CONCATENATE  lv_target '?addParents=' ip_folder_id  INTO lv_target.
 
 
 *ZCL_GOOGLE_HTTP_API=>SEND_PATCH_REQUEST(
@@ -194,84 +173,78 @@ CONCATENATE  lv_target '?addParents=' IP_FOLDER_ID  INTO lv_target.
 *).
 
 
-ZCL_GOOGLE_HTTP_API=>SEND_GET_REQUEST(
-  exporting
+    zcl_google_http_api=>send_get_request(
+      EXPORTING
 
-    TARGET = lv_target
-    PARAM_KIND =      'H'
-    LT_PARAM   =     lt_param" HTTP Framework (iHTTP) Table Name/Value Pairs
-      importing
-   response_string = lv_response_string
-   RESPONSE = lv_get_response
-).
-  endmethod.
-
-
-  method UPLOAD.
+        target = lv_target
+        param_kind =      'H'
+        lt_param   =     lt_param" HTTP Framework (iHTTP) Table Name/Value Pairs
+          IMPORTING
+       response_string = lv_response_string
+       response = lv_get_response
+    ).
+  ENDMETHOD.
 
 
+  METHOD upload.
 
-DATA:
-   lv_target     TYPE string value GC_UPLOAD_ENDPOINT,
-   lv_resp_string type string,
-   lv_param_kind TYPE string,
-   lt_multipart type zgsheet_post_multipart_tt,
-   ls_part  type zgsheet_post_multipart_s,
-   ls_param   TYPE ihttpnvp,
-   lv_json_request type string value '',
-   lv_mime_string type string,
-   lv_fname_String type string.
+    DATA:
+      lv_target       TYPE string VALUE gc_upload_endpoint,
+      lv_resp_string  TYPE string,
+      lv_param_kind   TYPE string,
+      lt_multipart    TYPE zgsheet_post_multipart_tt,
+      ls_part         TYPE zgsheet_post_multipart_s,
+      ls_param        TYPE ihttpnvp,
+      lv_json_request TYPE string VALUE '',
+      lv_mime_string  TYPE string,
+      lv_fname_string TYPE string.
 
-    lv_fname_String = text-005.
-    lv_mime_string = text-006.
+    lv_fname_string = TEXT-005.
+    lv_mime_string = TEXT-006.
 
-ls_part-CONTENT_TYPE = text-001.
+    ls_param-name =  TEXT-002.
+    ls_param-value = TEXT-003.
 
-ls_param-NAME =  text-002.
-ls_param-VALUE = text-003.
-LS_PART-CDATA =  text-004.
-REPLACE lv_fname_String  WITH IP_FILENAME INTO ls_part-CDATA.
-IF IP_DESTINATION_MIME_TYPE IS NOT INITIAL.
-REPLACE lv_mime_string WITH IP_DESTINATION_MIME_TYPE INTO ls_part-CDATA.
-ELSE.
- REPLACE lv_mime_string WITH IP_ORIGINAL_MIME_TYPE INTO ls_part-CDATA.
-ENDIF.
+    ls_part-content_type = TEXT-001.
+    ls_part-cdata =  TEXT-004.
 
+    REPLACE lv_fname_string WITH ip_filename INTO ls_part-cdata.
 
-APPEND ls_param TO LS_PART-HEADER_FIELDS.
-APPEND ls_part TO lt_multipart.
-CLEAR: ls_part,
-      ls_param.
+    IF ip_destination_mime_type IS NOT INITIAL.
+      REPLACE lv_mime_string WITH ip_destination_mime_type INTO ls_part-cdata.
+    ELSE.
+      REPLACE lv_mime_string WITH ip_original_mime_type INTO ls_part-cdata.
+    ENDIF.
 
 
-ls_part-CONTENT_TYPE = IP_ORIGINAL_MIME_TYPE.
-ls_param-NAME =  text-002.
-
-APPEND ls_param TO LS_PART-HEADER_FIELDS.
-ls_part-DATA = ip_file_xstring.
-APPEND ls_part TO lt_multipart.
-CLEAR: ls_part,
-      ls_param.
+    APPEND ls_param TO ls_part-header_fields.
+    APPEND ls_part TO lt_multipart.
+    CLEAR: ls_part,
+          ls_param.
 
 
+    ls_part-content_type = ip_original_mime_type.
+    ls_param-name =  TEXT-002.
+
+    APPEND ls_param TO ls_part-header_fields.
+    ls_part-data = ip_file_xstring.
+    APPEND ls_part TO lt_multipart.
+    CLEAR: ls_part,
+          ls_param.
+
+    lv_param_kind = 'H'.
+
+    zcl_google_http_api=>send_post_request(
+      EXPORTING
+        ip_target          = lv_target
+        ip_param_kind      = lv_param_kind
+
+        ip_json_request    =  lv_json_request
+        it_multiparts      =  lt_multipart   " Single part for mutipart post request
+       IMPORTING
+        ep_response_string =  lv_resp_string
+    ).
 
 
-
-
-lv_param_kind = 'H'.
-
-
-ZCL_GOOGLE_HTTP_API=>SEND_POST_REQUEST(
-  exporting
-    IP_TARGET          = lv_target
-    IP_PARAM_KIND      = lv_param_kind
-
-    IP_JSON_REQUEST    =  lv_json_request
-    IT_MULTIPARTS      =  lt_multipart   " Single part for mutipart post request
-   importing
-    EP_RESPONSE_STRING =  lv_resp_string
-).
-
-
-  endmethod.
+  ENDMETHOD.
 ENDCLASS.

@@ -27,8 +27,5 @@ CLASS ZCL_GSHEET_UTILITY IMPLEMENTATION.
     REPLACE  gc_spreadsheet_url_prefix IN ep_identifier WITH ''.
     REPLACE ALL OCCURRENCES OF REGEX '/.*' IN  ep_identifier WITH ''.
 
-
-
-
   ENDMETHOD.
 ENDCLASS.

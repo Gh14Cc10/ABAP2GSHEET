@@ -11,11 +11,6 @@ public section.
       !RESPONSE type ref to IF_HTTP_RESPONSE
     returning
       value(P_RESPONSE_DATA) type STRING .
-  class-methods EXTRACT_SPREADSHEET_ID
-    importing
-      !IP_URL type STRING
-    returning
-      value(EP_IDENTIFIER) type STRING .
   class-methods SEND_DELETE_REQUEST
     importing
       !TARGET type STRING
@@ -57,9 +52,6 @@ public section.
     exporting
       !RESPONSE_STRING type STRING
       value(RESPONSE) type ref to IF_HTTP_RESPONSE .
-  class-methods EXTRACT_RESPONSE
-    exporting
-      value(RESPONSE) type ref to IF_HTTP_RESPONSE .
   class-methods ENCODE_JSON2ABAP
     importing
       !IP_JSON type STRING
@@ -80,8 +72,6 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
 
 
   METHOD decode_abap2json.
-
-
 
     ep_json = /ui2/cl_json=>serialize(
        data = cp_abap_data
@@ -109,8 +99,6 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
       CALL METHOD response->get_cdata
         RECEIVING
           data = p_response_data.
-
-
 
 
       DATA(l_content_type) = response->get_content_type( ).
@@ -150,67 +138,6 @@ CLASS ZCL_GOOGLE_HTTP_API IMPLEMENTATION.
         data = cp_abap_data
 
     ).
-
-  ENDMETHOD.
-
-
-  METHOD extract_response.
-*DATA: lv_json_STRING type STRING,
-*      lv_spreadhsheetId type string,
-*      lv_responseData type  ZJSON_KEY_VALUE_T,
-*      lv_xstring_line type xstring.
-*
-*   CALL METHOD response->GET_DATA
-*     exporting
-*       OFFSET             = 0    " Offset into binary data
-*       LENGTH             = -1    " Length of binary data
-*       VIRUS_SCAN_PROFILE = '/SIHTTP/HTTP_UPLOAD'    " Virus Scan Profile
-*       VSCAN_SCAN_ALWAYS  = IF_HTTP_ENTITY=>CO_CONTENT_CHECK_PROFILE    " Virus Scan Always (A = Always, N = Never, space = Internal)
-*     receiving
-*       DATA               =  lv_xstring_line.   " Binary data
-*
-*
-* CALL FUNCTION 'HR_KR_XSTRING_TO_STRING'
-* EXPORTING
-* in_xstring =  lv_xstring_line
-* IMPORTING
-* out_string = lv_json_string.
-*
-*
-*DATA: JSON_DOCUMENT TYPE REF TO  ZCL_JSON_DOCUMENT,
-*      lv_results type string_table.
-*
-*
-*   ZCL_JSON_DOCUMENT=>CREATE_WITH_JSON(
-*     exporting
-*       JSON          = lv_json_STRING
-**       DATE_FORMAT   =
-*     receiving
-*       JSON_DOCUMENT = json_document
-*   ).
-* json_document->set_json( lv_json_STRING ).
-*
-*json_document->DUMPS(
-*  exporting
-*    JSON           = lv_json_STRING
-**    CURRENT_INTEND =
-*  importing
-*    RESULT         = lv_results
-*).
-* lv_spreadhsheetId  = json_document->GET_VALUE( KEY =  'SreadhSheetID').
-
-
-  ENDMETHOD.
-
-
-  METHOD extract_spreadsheet_id.
-
-    ep_identifier = ip_url.
-    REPLACE  gc_spreadsheet_url_prefix IN ep_identifier WITH ''.
-    REPLACE ALL OCCURRENCES OF REGEX '/.*' IN  ep_identifier WITH ''.
-
-
-
 
   ENDMETHOD.
 

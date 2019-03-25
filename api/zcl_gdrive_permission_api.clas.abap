@@ -25,28 +25,13 @@ CLASS ZCL_GDRIVE_PERMISSION_API IMPLEMENTATION.
 
   METHOD create.
 
-
-
     DATA: lt_param    TYPE tihttpnvp,
           ls_param    TYPE ihttpnvp,
           lv_response TYPE string,
           lv_target   TYPE string VALUE gc_endpoint_url,
           lv_json_req TYPE string.
-*CREATE OBJECT GOBJECT TYPE ZCL_GOOGLE_HTTP_API.
-*ls_param-name = 'mimeType'.
-*ls_param-value = '1T8ApYlNVZdW7LlXLdeBIFqwn5Rf4fB0hfi63TU15jak'.
-*
-*
-*
-*APPEND ls_param TO lt_param.
-*CLEAR ls_param.
-*ls_param-name = 'mimeType'.
-*ls_param-value = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'.
-*APPEND ls_param TO lt_param.
 
-
-    lv_json_req = '{"role":"writer","type":"user","emailAddress":"micael.teweldemedhin@techedgegroup.com"}'.
-
+*    lv_json_req = '{"role":"writer","type":"user","emailAddress":"micael.teweldemedhin@techedgegroup.com"}'.
 
     zcl_google_http_api=>decode_abap2json(
       IMPORTING
@@ -68,15 +53,6 @@ CLASS ZCL_GDRIVE_PERMISSION_API IMPLEMENTATION.
         ep_response_string = lv_response
     ).
 
-*SEND_POST_REQUEST(
-*  exporting
-*    PI_TARGET          = lv_target
-*    PI_PARAM_KIND      =  'H'
-*    PT_PARAM           =   lt_param  " HTTP Framework (iHTTP) Table Name/Value Pairs
-*    PI_JSON_REQUEST    =  lv_json_req
-*  importing
-*    PE_RESPONSE_STRING =  LV_RESPONSE
-*).
   ENDMETHOD.  "#EC CI_VALPAR
 
 

@@ -12,9 +12,7 @@ public section.
     importing
       !IP_SPREADSHEET_ID type STRING
       !IP_RANGE type STRING
-      value(IP_VALUE_RANGE) type ZGSHEET_VALUE_RANGES_S
-    exporting
-      !EP_VALUE_UPDATED type STRING .
+      value(IP_VALUE_RANGE) type ZGSHEET_VALUE_RANGES_S .
   class-methods GET
     importing
       !IP_SPREADSHEET_ID type STRING
@@ -54,10 +52,6 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
 
   METHOD append.
 
-
-
-
-
     DATA:
       lt_param           TYPE tihttpnvp,
       ls_param           TYPE ihttpnvp,
@@ -66,7 +60,6 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
 *'https://sheets.googleapis.com/v4/spreadsheets/$1/values/$2',
 * lv_target type string value 'https://sheets.googleapis.com/v4/spreadsheets/19rDV0SsDV0M600Y_znwHChsMxTkiKm7kaJeTNddaUFk/values/A1',
       lv_req_json        TYPE string,
-
       lv_response_string TYPE string.
 
     ls_param-name = 'valueInputOption'.
@@ -74,16 +67,14 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
     APPEND ls_param TO lt_param.
     CLEAR ls_param.
 
-
-
     REPLACE '{spreadsheetId}' WITH ip_spreadsheet_id INTO lv_target.
     CONCATENATE lv_target '/' ip_range ':append'   INTO lv_target.
 
     zcl_google_http_api=>decode_abap2json(
     IMPORTING
-   ep_json      =  lv_req_json
+      ep_json      =  lv_req_json
     CHANGING
-    cp_abap_data = ip_value_range
+      cp_abap_data = ip_value_range
     ).
 
     zcl_google_http_api=>send_post_request(
@@ -95,15 +86,6 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
       IMPORTING
         ep_response_string =  lv_response_string
     ).
-
-
-
-*ZCL_GOOGLE_HTTP_API=>ENCODE_JSON2ABAP(
-*  exporting
-*    IP_JSON      = lv_response_string
-*  changing
-*    CP_ABAP_DATA =  EP_VALUE_RANGE
-*).
 
 
 
@@ -121,20 +103,14 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
       lv_req_json        TYPE string,
       lv_response_string TYPE string.
 
-
-
-
-
     REPLACE '{spreadsheetId}' WITH ip_spreadsheet_id INTO lv_target.
     CONCATENATE lv_target '/' ip_range_string ':append'   INTO lv_target.
 
-
-
     zcl_google_http_api=>decode_abap2json(
     IMPORTING
-   ep_json      =  lv_req_json
+      ep_json      =  lv_req_json
     CHANGING
-    cp_abap_data = ip_value_range
+      cp_abap_data = ip_value_range
     ).
 
     zcl_google_http_api=>send_post_request(
@@ -147,15 +123,6 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
         ep_response_string =  lv_response_string
     ).
 
-
-
-
-    zcl_google_http_api=>encode_json2abap(
-      EXPORTING
-        ip_json      = lv_response_string
-      CHANGING
-        cp_abap_data =  ip_value_range
-    ).
   ENDMETHOD.  "#EC CI_VALPAR
 
 
@@ -167,20 +134,14 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
       lv_req_json        TYPE string,
       lv_response_string TYPE string.
 
-
-
-
-
     REPLACE '{spreadsheetId}' WITH pa_spreadsheet_id INTO lv_target.
     CONCATENATE lv_target ':batchClear'   INTO lv_target.
 
-
-
     zcl_google_http_api=>decode_abap2json(
     IMPORTING
-   ep_json      =  lv_req_json
+       ep_json      =  lv_req_json
     CHANGING
-    cp_abap_data = pa_range
+       cp_abap_data = pa_range
     ).
 
     zcl_google_http_api=>send_post_request(
@@ -193,15 +154,6 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
         ep_response_string =  lv_response_string
     ).
 
-
-
-
-    zcl_google_http_api=>encode_json2abap(
-      EXPORTING
-        ip_json      = lv_response_string
-      CHANGING
-        cp_abap_data =  pa_value_range
-    ).
   ENDMETHOD.  "#EC CI_VALPAR
 
 
@@ -210,7 +162,7 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
     DATA:
       lt_param           TYPE tihttpnvp,
       ls_param           TYPE ihttpnvp,
-      lv_get_response    TYPE REF TO if_http_response,
+      lo_get_response    TYPE REF TO if_http_response,
       lv_target          TYPE string VALUE  gc_endpoint_url,
       lv_response_string TYPE string.
 
@@ -219,24 +171,18 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
     APPEND ls_param TO lt_param.
     CLEAR ls_param.
 
-
-
     REPLACE '{spreadsheetId}' WITH pa_spreadsheet_id INTO lv_target.
     CONCATENATE lv_target ':batchGet'   INTO lv_target.
 
     zcl_google_http_api=>send_get_request(
       EXPORTING
-
         target = lv_target
         param_kind =      'H'
         lt_param   =     lt_param" HTTP Framework (iHTTP) Table Name/Value Pairs
-          IMPORTING
+      IMPORTING
        response_string = lv_response_string
-       response = lv_get_response
+       response = lo_get_response
     ).
-
-
-
 
     zcl_google_http_api=>encode_json2abap(
       EXPORTING
@@ -252,51 +198,38 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
 
   METHOD batch_update.
 
-
-
     DATA: lv_target       TYPE string VALUE gc_endpoint_url,
           lv_response_str TYPE string,
           lv_req_json     TYPE string.
 
-
     REPLACE '{spreadsheetId}' WITH ip_spreadsheet_id  INTO lv_target.
     CONCATENATE lv_target ':batchUpdate' INTO lv_target.
 
-
     zcl_google_http_api=>decode_abap2json(
     IMPORTING
-   ep_json      =  lv_req_json
+      ep_json      =  lv_req_json
     CHANGING
-    cp_abap_data = ip_batch_req
+      cp_abap_data = ip_batch_req
     ).
-
-
 
     zcl_google_http_api=>send_post_request(
       EXPORTING
         ip_target          = lv_target
         ip_param_kind      = 'H'
-
         ip_json_request    = lv_req_json
       IMPORTING
         ep_response_string =  lv_response_str
     ).
-
-
-
-
-
 
   ENDMETHOD.  "#EC CI_VALPAR
 
 
   METHOD get.
 
-
     DATA:
       lt_param           TYPE tihttpnvp,
       ls_param           TYPE ihttpnvp,
-      lv_get_response    TYPE REF TO if_http_response,
+      lo_get_response    TYPE REF TO if_http_response,
       lv_target          TYPE string VALUE  gc_endpoint_url,
       lv_response_string TYPE string.
 
@@ -305,17 +238,13 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
 
     zcl_google_http_api=>send_get_request(
       EXPORTING
-
         target = lv_target
         param_kind =      'H'
         lt_param   =     lt_param" HTTP Framework (iHTTP) Table Name/Value Pairs
           IMPORTING
        response_string = lv_response_string
-       response = lv_get_response
+       response = lo_get_response
     ).
-
-
-
 
     zcl_google_http_api=>encode_json2abap(
       EXPORTING
@@ -323,9 +252,6 @@ CLASS ZCL_GSPREADSHEET_VALUES_API IMPLEMENTATION.
       CHANGING
         cp_abap_data =  ep_value_range
     ).
-
-
-
 
   ENDMETHOD.
 ENDCLASS.

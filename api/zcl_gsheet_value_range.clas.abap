@@ -28,24 +28,23 @@ CLASS ZCL_GSHEET_VALUE_RANGE IMPLEMENTATION.
 
   METHOD append_cell_value.
 
-
-
     APPEND ip_value TO me->gt_values_string.
+    ADD 1 TO gv_column_num.
+
   ENDMETHOD.
 
 
   METHOD get_column_number.
 
-
-
     ep_column_number = me->gv_column_num.
+
   ENDMETHOD.
 
 
   METHOD move_next_row.
 
-*     APPEND GT_VALUES_STRING TO  me->GT_VALUES.
     APPEND gt_values_string TO me->gs_value_range-values.
     CLEAR gt_values_string.
+
   ENDMETHOD.
 ENDCLASS.

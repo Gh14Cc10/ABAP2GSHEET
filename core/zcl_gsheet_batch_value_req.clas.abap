@@ -25,6 +25,7 @@ CLASS ZCL_GSHEET_BATCH_VALUE_REQ IMPLEMENTATION.
 
 
   METHOD add_request.
+
     me->gv_single_request = ip_request.
     APPEND ip_request TO me->gv_requests-requests.
 
@@ -34,10 +35,10 @@ CLASS ZCL_GSHEET_BATCH_VALUE_REQ IMPLEMENTATION.
   METHOD send_request.
 
     zcl_gspreadsheet_values_api=>batch_update(
-  EXPORTING
-    ip_spreadsheet_id = ip_spreadsheet_id
-    ip_sheet_id       = ip_sheet_id
-    ip_batch_req     =    me->gv_single_request" Request structure for spreadsheet batchupdate
+    EXPORTING
+     ip_spreadsheet_id = ip_spreadsheet_id
+     ip_sheet_id       = ip_sheet_id
+     ip_batch_req     =    me->gv_single_request" Request structure for spreadsheet batchupdate
 ).
   ENDMETHOD.
 ENDCLASS.
