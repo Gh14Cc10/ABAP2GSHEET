@@ -2,8 +2,8 @@
 *& Report ZGOOGLE_SHEETS_CHANGES
 *&---------------------------------------------------------------------*
 *& - New spreadsheet creation
-*& - New sheet add to the same spreadsheet
-*& -  Newly created sheet immediately deleted
+*& - New sheet added to the same spreadsheet
+*& - Newly created sheet immediately deleted
 *& -
 *& -
 *&---------------------------------------------------------------------*
@@ -17,11 +17,6 @@ DATA: lo_spreadsheet_obj TYPE REF TO zcl_gspreadsheet,
 
 
 
-
-*ls_spreadsheet-SHEETS
-APPEND ls_sheet TO  lt_sheets.
-
-
 zcl_gspreadsheet_api=>create_new_spreadsheet(
   EXPORTING
     ip_spreadsheet_s =     ls_spreadsheet  " Google sheet object structure
@@ -31,16 +26,19 @@ zcl_gspreadsheet_api=>create_new_spreadsheet(
 
 
 ls_spreadsheet = lo_spreadsheet_obj->get_abap_obj( ).
+
+"Write the new spreadsheet url
 WRITE ls_spreadsheet-spreadsheet_url.
 
 
-*Add a new  sheet
+*Add a new sheet inside the spreadsheet
+
 ls_spreadsheet-properties-title = 'NewSpreadsheetTest'.
 ls_sheet-properties-title = 'NewSheetToDelete'.
 lo_spreadsheet_obj->add_sheet( ip_property =  ls_sheet-properties ).
 
 lt_sheets = lo_spreadsheet_obj->get_sheets_list(
-*    PA_SPREADSHEET_ID =
+    pa_spreadsheet_id = ls_spreadsheet-spreadsheet_id
 ).
 CLEAR ls_sheet.
 LOOP AT lt_sheets INTO ls_sheet.

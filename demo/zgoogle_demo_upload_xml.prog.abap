@@ -24,11 +24,7 @@ DATA : BEGIN OF i_items  OCCURS 100,
          quantity  TYPE string,
          amount    TYPE string.
 DATA : END OF i_items.
-*DATA WA_ITEM type REF TO i_items.
 
-*select-options: l_date for sy-datum DEFAULT sy-datum.
-*select-options: l_order for vbak-vbeln.
-*PARAMETERS : fname type LOCALFILE DEFAULT 'c:\'.
 DATA  it_vbap TYPE STANDARD TABLE OF  vbap.
 
 PERFORM select_orders.

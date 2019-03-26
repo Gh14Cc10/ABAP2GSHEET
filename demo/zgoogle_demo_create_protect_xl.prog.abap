@@ -2,12 +2,10 @@
 *& Report ZGOOGLE_DEMO1
 *&---------------------------------------------------------------------*
 *& - Create a new spreadsheet
-*& - Protect a range with limiting the user that rights to edit it
+*& - Protect a range with limiting the user that have rights to edit it
 *& - Share to an user
 *&---------------------------------------------------------------------*
 REPORT zgoogle_demo_create_protect_xl.
-
-
 
 DATA: lo_batch_req_obj   TYPE REF TO zcl_gsheet_batch_req,
       lo_spreadsheet_obj TYPE REF TO zcl_gspreadsheet,
@@ -19,8 +17,6 @@ CREATE OBJECT lo_batch_req_obj TYPE zcl_gsheet_batch_req.
 *Local spreadsheet
 ls_spreadsheet-properties-title = 'NewSpreadsheetTest'.
 
-
-
 *Creaton on google drive
 zcl_gspreadsheet_api=>create_new_spreadsheet(
   EXPORTING
@@ -29,13 +25,9 @@ zcl_gspreadsheet_api=>create_new_spreadsheet(
     ep_spreadsheet   =     lo_spreadsheet_obj " Google sheet object structure
 ).
 
-
-
-
-
-
 * Massive update of newly created spreadsheeet
 ls_spreadsheet = lo_spreadsheet_obj->get_abap_obj( ).
+
 ls_batch_request-repeat_cell-range-sheet_id =  ''.
 ls_batch_request-repeat_cell-range-start_column_index = 1.
 ls_batch_request-repeat_cell-range-end_column_index = 10.
@@ -47,6 +39,7 @@ ls_batch_request-repeat_cell-cell-user_entered_value-number_value = 28.
 lo_batch_req_obj->add_request( ip_batch_req = ls_batch_request ).
 
 CLEAR ls_batch_request.
+
 * Protect range of cell
 ls_batch_request-add_protected_range-protected_range-range-sheet_id = '0'.
 ls_batch_request-add_protected_range-protected_range-range-start_row_index = '1'.
@@ -75,9 +68,6 @@ lo_batch_req_obj->send_request(
 
 ***Share the new excel
 DATA: ls_permission TYPE zgdrive_permission_s.
-
-
-
 
 ls_permission-role = 'writer'.
 ls_permission-type = 'user'.

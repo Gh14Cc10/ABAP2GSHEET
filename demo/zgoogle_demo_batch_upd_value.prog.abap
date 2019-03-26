@@ -2,10 +2,13 @@
 *& Report ZGOOGLE_BATCH_UPD_VALUE
 *&---------------------------------------------------------------------*
 *& Usage of Spreadsheet values batch update
+*
+* to be used with ZGOOGLE_DEMO_ADD_SHEET
+* add some values
+*
 *&---------------------------------------------------------------------*
 REPORT zgoogle_batch_upd_value.
 
-"to be used with ZGOOGLE_DEMO_ADD_SHEET
 
 SELECTION-SCREEN: BEGIN OF BLOCK bl1 WITH FRAME TITLE TEXT-001.
 
@@ -36,6 +39,7 @@ SELECTION-SCREEN END OF LINE.
 
 
 SELECTION-SCREEN:END OF BLOCK bl1 .
+
 DATA:
 
 *Request object
@@ -48,9 +52,9 @@ DATA:
   ls_value          LIKE LINE OF lt_values,
 *Range structure
   ls_value_range    TYPE zgsheet_value_ranges_s,
-  ls_value_string   LIKE LINE OF lt_values,
 
   lv_spreadsheet_id TYPE string.
+
 lv_spreadsheet_id = zcl_gsheet_utility=>extract_spreadsheet_id( ip_url = p_url ).
 
 CREATE OBJECT lo_request_obj TYPE zcl_gsheet_batch_value_req.
@@ -58,19 +62,16 @@ CREATE OBJECT lo_request_obj TYPE zcl_gsheet_batch_value_req.
 
 APPEND '1' TO ls_value.
 APPEND   ls_value TO  lt_values.
-CLEAR: ls_value_string,
-        ls_value.
+CLEAR ls_value.
 
 
 APPEND '2' TO ls_value.
 APPEND   ls_value TO  lt_values.
-
-
-CLEAR: ls_value_string,
-        ls_value.
+CLEAR ls_value.
 
 APPEND '3' TO ls_value.
 APPEND   ls_value TO  lt_values.
+CLEAR ls_value.
 
 *range1
 ls_value_range-range = p_range1.

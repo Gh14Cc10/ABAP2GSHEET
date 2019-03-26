@@ -3,14 +3,14 @@
 *&---------------------------------------------------------------------*
 *& Download the cell valu content of a google spreadsheet link to copy
 *& into a database table
-*& p_url: Spreadsheeet link
+*& p_url: Spreadsheeet link that must contain a table
 *& p_range: Range of cells to read the header row from the spreadsheet
 *& p_head: Range of cells to read the value rows the the spreadsheet
 *&
 *&---------------------------------------------------------------------*
 REPORT zgoogle_demo_download_gsheet.
 
-"Da usare con qualsiasi excel che abbia una tabella
+"i.e. spreadsheet
 *https://docs.google.com/spreadsheets/d/15iWsHbq7Y6JK1RTZD0EGkmxjB_L1u_WXdbiJp9y2rlI/edit#gid=0
 
 
@@ -29,8 +29,6 @@ SELECTION-SCREEN END OF LINE.
 SELECTION-SCREEN BEGIN OF LINE.
 PARAMETERS: p_url TYPE string OBLIGATORY LOWER CASE.
 SELECTION-SCREEN END OF LINE.
-
-
 
 SELECTION-SCREEN BEGIN OF LINE.
 SELECTION-SCREEN COMMENT (16) TEXT-013.
@@ -97,8 +95,6 @@ ls_header_field = zcl_gspreadsheet_values_api=>get(
 lt_headers_rows  = ls_header_field-values.
 
 
-
-
 READ TABLE lt_headers_rows INDEX 1 INTO lt_header_fields.
 
 
@@ -106,16 +102,13 @@ LOOP AT  lt_values_rows  INTO lt_values_row_values.
 
   LOOP AT  lt_values_row_values  INTO  lv_value_row.
 
-
     READ TABLE lt_header_fields INDEX sy-tabix INTO lv_fieldname.
     ASSIGN COMPONENT lv_fieldname OF STRUCTURE ls_table_structure TO <gv_fieldvalue>.
     <gv_fieldvalue> =  lv_value_row.
 
-
 *READ TABLE ls_string_internal_tt WITH TABLE KEY  INTO ls_string_internal_tt INDEX 1.
   ENDLOOP.
   APPEND ls_table_structure TO lt_table_data.
-
 
 ENDLOOP.
 

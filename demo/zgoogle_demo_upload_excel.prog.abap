@@ -5,15 +5,11 @@
 *&---------------------------------------------------------------------*
 REPORT zgoogle_demo_upload_excel.
 
-
-
 DATA : filename TYPE string,
        data     TYPE xstring.
 
 DATA  : length   TYPE i.
 DATA: lt_binary_data  TYPE STANDARD TABLE OF x255 WITH NON-UNIQUE DEFAULT KEY.
-
-
 
 filename = 'C:\sampleData.xlsx'.
 CALL FUNCTION 'GUI_UPLOAD'
