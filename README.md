@@ -17,13 +17,13 @@ NOTE
 As a prerequisite, the redirection URI of the AS ABAP must be reachable from the internet. Google will
 check this during the registration process. If your AS ABAP is reachable from the internet, you may
 skip the below described steps of this chapter. Otherwise proceed as follows:
-1. Open a command shell. On a Windows system, this can be done by means of command cmd.
-2. Run the following command:
+- Open a command shell. On a Windows system, this can be done by means of command cmd.
+- Run the following command:
 ping <hostname of your AS ABAP Development System>
-3. Note down the returned IP address.
-4. Edit the hosts file as administrator. On a windows system, this file is located at the following path:
+- Note down the returned IP address.
+- Edit the hosts file as administrator. On a windows system, this file is located at the following path:
 C:\Windows\System32\drivers\etc\hosts
-5. Map the IP to a fake top level domain name, by adding a new line to the hosts file.
+- Map the IP to a fake top level domain name, by adding a new line to the hosts file.
 <IP ADDRESS NOTED IN STEP 3> <YOUR TOP LEVEL DOMAIN>
 Example: 10.66.51.74 dev.yourtopleveldomain.com
 
